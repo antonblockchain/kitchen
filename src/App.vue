@@ -1,24 +1,66 @@
 <template>
-  <div id="app">
+  <div>
+    <!--    <div id="nav" v-if="isLogin">-->
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/">Home</router-link>
+      |
+      <router-link to="/page">page</router-link>
+      |
+      <button type="button" @click="logout">logout</button>
+      isLogin: {{ isLogin }} | userId : {{ id }}
     </div>
     <router-view />
   </div>
 </template>
 
+<script>
+import firebase from "firebase/app";
+import messages from "@/utils/message";
+
+export default {
+  name: "App",
+  data() {
+    return {
+      id: "",
+      isLogin: false
+    };
+  },
+  methods: {
+    async logout() {
+      await this.$store.dispatch("logout");
+      this.$router.push("/");
+      this.$message(messages["logout"]);
+    }
+  },
+  created() {
+    firebase.auth().onAuthStateChanged(async user => {
+      this.isLogin = !!user;
+      this.id = await this.$store.dispatch("getUid");
+    });
+  },
+  async mounted() {
+    try {
+      this.id = await this.$store.dispatch("getUid");
+    } catch (e) {
+      console.log(e);
+    }
+  }
+};
+</script>
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+@import "assets/scss/main";
 
 #nav {
-  padding: 30px;
+  position: fixed;
+  background: rgba(#fff, 0.8);
+  left: 0;
+  bottom: 0;
+  right: 0;
+  text-align: center;
+  padding: 15px 10px;
+  box-shadow: 0 0 1rem #2c3e50;
+  z-index: 1000;
 
   a {
     font-weight: bold;
