@@ -149,109 +149,15 @@
       <div class="page__right">
         <pre style="line-height: 1; font-size: 0;">
           <small>
-            <code style="font-size: 1.4rem">
+            <code style="font-size: 1.2rem">
               {{ list }}
             </code>
           </small>
         </pre>
 
         <div class="calc">
-          <div class="calc__item">
-            <div class="calc__head">
-              <div class="calc__head_title">ПРОСЧЕТ <span>А</span></div>
-              <div class="calc__nav">
-                <div class="calc__nav_menu">
-                  <a href="#" class="calc__nav_link">Редактировать</a>
-                  <a href="#" class="calc__nav_link">Дублировать</a>
-                  <a href="#" class="calc__nav_link">Удалить</a>
-                  <a href="#" class="calc__nav_link">%</a>
-                </div>
-                <button class="calc__nav_toggle" type="button">
-                  <span class="icon icon-more"></span>
-                </button>
-              </div>
-              <button class="calc__show" type="button" і>
-                <span class="icon icon-down"></span>
-              </button>
-            </div>
-
-            <div class="calc__content">
-              <ul class="calc__list">
-                {% for i in range(0, 7) -%}
-                <li class="calc__row">
-                  <div class="calc__name">
-                    <b>Мтериал корпуса:</b> Базовый, Серый
-                  </div>
-                  <div class="calc__size">20 м<sup>2</sup></div>
-                  <div class="calc__price">34 000 ₽</div>
-                  <button class="calc__remove" type="button">
-                    <span class="icon icon-close"></span>
-                  </button>
-                </li>
-                {%- endfor %}
-              </ul>
-
-              <div class="calc__total">
-                <div class="calc__total_title">ИТОГО:</div>
-                <div class="calc__total_price">
-                  853 000 ₽<sup>-10%</sup>
-                  <del>999 000 ₽</del>
-                </div>
-              </div>
-
-              <button class="calc__toggle" type="button">
-                <span class="icon icon-down"></span>
-              </button>
-            </div>
-          </div>
-
-          <div class="calc__item">
-            <div class="calc__head">
-              <div class="calc__head_title">ПРОСЧЕТ <span>Б</span></div>
-              <div class="calc__nav">
-                <div class="calc__nav_menu">
-                  <a href="#" class="calc__nav_link">Редактировать</a>
-                  <a href="#" class="calc__nav_link">Дублировать</a>
-                  <a href="#" class="calc__nav_link">Удалить</a>
-                  <a href="#" class="calc__nav_link">%</a>
-                </div>
-                <button class="calc__nav_toggle" type="button">
-                  <span class="icon icon-more"></span>
-                </button>
-              </div>
-              <button class="calc__show" type="button">
-                <span class="icon icon-down"></span>
-              </button>
-            </div>
-            <div class="calc__content">
-              <ul class="calc__list">
-                {% for i in range(0, 5) -%}
-                <li class="calc__row">
-                  <div class="calc__name">
-                    <b>Мтериал корпуса:</b> Базовый, Серый
-                  </div>
-                  <div class="calc__size">20 м<sup>2</sup></div>
-                  <div class="calc__price">34 000 ₽</div>
-                  <button class="calc__remove" type="button">
-                    <span class="icon icon-close"></span>
-                  </button>
-                </li>
-                {%- endfor %}
-              </ul>
-
-              <div class="calc__total">
-                <div class="calc__total_title">ИТОГО:</div>
-                <div class="calc__total_price">
-                  853 000 ₽<sup>-10%</sup>
-                  <del>999 000 ₽</del>
-                </div>
-              </div>
-
-              <button class="calc__toggle" type="button">
-                <span class="icon icon-down"></span>
-              </button>
-            </div>
-          </div>
+          <CalcItem />
+          <CalcItem />
         </div>
 
         <button class="calc__add btn" type="button">
@@ -270,10 +176,11 @@
 
 <script>
 import PageItem from "@/components/Page-item";
+import CalcItem from "@/components/Calc-item";
 
 export default {
   name: "Page",
-  components: { PageItem },
+  components: { PageItem, CalcItem },
   computed: {
     list() {
       console.log();

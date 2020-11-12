@@ -1,5 +1,83 @@
 export default {
   state: {
+    data: [
+      {
+        order: 1,
+        user: "Ткаченко Владислав Дмитриевич",
+        time: "27.07.2020",
+        list: [
+          {
+            name: "R",
+            total: 0,
+            discount: 0,
+            corps: [
+              {
+                id: 1,
+                name: "Brilliant",
+                color: "",
+                square: 0,
+                type: 0,
+                options: []
+              }
+            ],
+            facades: [],
+            loops: [],
+            boxes: [],
+            mechanisms: [],
+            tabletop: [],
+            "tabletop-psc": [],
+            "wall-panel": [],
+            "wall-panel-psc": [],
+            handles: [],
+            other: []
+          },
+          {
+            name: "B",
+            total: 0,
+            discount: 0,
+            corps: [],
+            facades: [],
+            loops: [],
+            boxes: [],
+            mechanisms: [],
+            tabletop: [],
+            "tabletop-psc": [],
+            "wall-panel": [],
+            "wall-panel-psc": [],
+            handles: [],
+            other: []
+          }
+        ]
+      }
+    ],
+
+    list2: [
+      {
+        name: "A",
+        total: 0,
+        discount: 0,
+        corps: [
+          {
+            id: 1,
+            name: "Brilliant",
+            color: "",
+            square: 0,
+            type: 0,
+            options: []
+          }
+        ],
+        facades: [],
+        loops: [],
+        boxes: [],
+        mechanisms: [],
+        tabletop: [],
+        "tabletop-psc": [],
+        "wall-panel": [],
+        "wall-panel-psc": [],
+        handles: [],
+        other: []
+      }
+    ],
     list: [
       {
         id: 1,
@@ -17,36 +95,6 @@ export default {
             height: 200,
             depth: 300,
             count: 2
-          },
-          {
-            id: 2,
-            name: "Brilliant 3",
-            color: "Moro B",
-            square: 0.01,
-            type: 1,
-            width: 133,
-            height: 2,
-            depth: 3,
-            count: 4
-          }
-        ]
-      },
-      {
-        id: 222,
-        name: "Brilliant 2",
-        color: "5112B",
-        square: 0,
-        options: [
-          {
-            id: 1,
-            name: "HGL",
-            color: "5112B",
-            square: 0,
-            type: 3,
-            width: 1,
-            height: 3,
-            depth: 44,
-            count: 5
           }
         ]
       }
@@ -85,8 +133,7 @@ export default {
       state.list = [...list];
     },
     updateSiblings(state, { parentId, id, newData }) {
-      let list = state.list;
-      list = list.map(item => {
+      let list = state.list.map(item => {
         if (item.id === parentId) {
           item.options = item.options.map(sibling => {
             if (sibling.id === id) {
@@ -119,6 +166,9 @@ export default {
     }
   },
   getters: {
+    data: state => {
+      return state.data;
+    },
     list: state => {
       return state.list;
     }

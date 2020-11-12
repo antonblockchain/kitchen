@@ -2,7 +2,7 @@
   <div>
     <div v-if="showCalc" class="page__item page__item-grey">
       <label class="page__label page__label-large">
-        <span class="page__text">Материал корпуса {{ index + 1 }}</span>
+        <span class="page__text">Деталь корпуса {{ index + 1 }}</span>
         <span class="page__label_w">
           <input type="text" class="page__input" v-model="itemName" />
           <a href="#prod" class="icon icon-search js-popup"></a>
@@ -188,5 +188,3 @@ export default {
   }
 };
 </script>
-
-<style scoped></style>
