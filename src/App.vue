@@ -4,7 +4,11 @@
     <div id="nav">
       <router-link to="/">Home</router-link>
       |
-      <router-link to="/page">page</router-link>
+      <router-link to="/main">Main</router-link>
+      |
+      <router-link to="/page">Page</router-link>
+      |
+      <router-link to="/order">Order</router-link>
       |
       <button type="button" @click="logout">logout</button>
       isLogin: {{ isLogin }} | userId : {{ id }}

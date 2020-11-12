@@ -42,9 +42,14 @@ body {
   &:hover {
     opacity: .6;
   }
+
   &[disabled] {
     pointer-events: none;
     opacity: .4;
+  }
+
+  &-block {
+    width: 100%;
   }
 }
 
@@ -249,6 +254,10 @@ body {
     flex-direction: column;
     overflow: auto;
 
+    &-dark {
+      background: #f3f3f3;
+    }
+
     @include r($lg) {
       max-width: 100%;
       padding: 4rem 2rem;
@@ -273,6 +282,10 @@ body {
     align-items: flex-end;
     margin-bottom: 1.1rem;
 
+    &-inside {
+      margin-bottom: 3rem;
+    }
+
     &_title {
       font-size: 1.8rem;
       font-weight: 500;
@@ -291,7 +304,7 @@ body {
     }
 
     &_info {
-      font-size: 14px;
+      font-size: 1.4rem;
       font-weight: 600;
       line-height: 1.3;
       text-align: right;
@@ -302,6 +315,14 @@ body {
         font-weight: 900;
         color: #fb837a;
       }
+    }
+
+    &_back {
+      font-size: 1.4rem;
+      font-weight: bold;
+      line-height: 1.3;
+      color: #d9d9d9;
+      text-decoration: none;
     }
 
     &_buffer,
@@ -342,6 +363,7 @@ body {
     padding: 2.2rem 0;
     margin-right: -2rem;
 
+    &-grey,
     &-black {
       background: #000000;
       box-shadow: 3rem 0 0 #000000, -3rem 0 0 #000000;
@@ -354,6 +376,11 @@ body {
       .page__input {
         color: #ffffff;
       }
+    }
+
+    &-grey {
+      background: #2b2b2b;
+      box-shadow: 3rem 0 0 #2b2b2b, -3rem 0 0 #2b2b2b;
     }
 
     &-red {
@@ -369,6 +396,7 @@ body {
         color: #ffffff;
       }
     }
+
   }
 
   &__label {
@@ -397,6 +425,12 @@ body {
     }
 
     &-res {
+      position: relative;
+
+      label {
+        display: block;
+      }
+
       .page__text {
         text-align: center;
       }
@@ -405,6 +439,33 @@ body {
         background: #fff;
         border-color: #fff;
         color: #000000;
+        text-align: center;
+        padding-left: .5rem;
+      }
+    }
+
+    &_check {
+      background: #63dd8b;
+      color: #fff;
+      font-size: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 3.8rem;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      border: 0;
+      padding: 0;
+      z-index: 2;
+      cursor: pointer;
+      opacity: 0;
+      transition: all .2s ease-in-out;
+      outline: none;
+
+      &:hover {
+        opacity: 1;
       }
     }
 
@@ -511,6 +572,9 @@ body {
     font-size: 1.6rem;
     font-weight: 600;
   }
+  &__input[type="number"]{
+    appearance: none;
+  }
 
   &__btn {
     width: 3.8rem;
@@ -571,7 +635,7 @@ body {
     margin-bottom: 2rem;
 
     &_title {
-      font-size: 18px;
+      font-size: 1.8rem;
       font-weight: 900;
       line-height: 1.33;
       text-align: left;
@@ -660,7 +724,7 @@ body {
   }
 
   &__content {
-    display: none;
+    //display: none;
   }
 
   &__list {
@@ -671,7 +735,12 @@ body {
     border-bottom: 1px solid #f3f3f3;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: .5rem 1.5rem;
+
+    & > *:nth-child(n + 3) {
+      margin-left: auto;
+    }
   }
 
   &__name {
@@ -695,8 +764,14 @@ body {
     color: #000000;
   }
 
+  &__interest {
+    font-size: 1.4rem;
+    font-weight: bold;
+    line-height: 1.7;
+    text-align: right;
+  }
+
   &__price {
-    margin-left: auto;
     font-size: 1.4rem;
     font-weight: bold;
     line-height: 1.71;
@@ -714,6 +789,7 @@ body {
     margin-left: 1.1rem;
     cursor: pointer;
     transition: all .2s ease-in-out;
+    outline: none;
 
     &:focus,
     &:hover {
@@ -725,6 +801,15 @@ body {
     display: flex;
     align-items: center;
     padding: 1.5rem 1.5rem;
+
+    &-big {
+      background-color: #fb837a;
+
+      .calc__total_price,
+      .calc__total_title {
+        color: #fff;
+      }
+    }
 
     &_title {
       font-size: 1.8rem;
@@ -812,4 +897,190 @@ body {
       background-color: #000;
     }
   }
+}
+
+
+.lc {
+  width: 100%;
+
+  &__top {
+    padding: 3rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__title {
+    font-size: 4.8rem;
+  }
+
+  &__name {
+    font-size: 1.6rem;
+    font-weight: bold;
+    line-height: 1.5;
+    text-align: center;
+    color: #fb837a;
+  }
+
+  &__list {
+
+  }
+
+  &__item {
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #000000;
+    padding: 2.4rem 3.5rem;
+
+    &:nth-child(odd) {
+      background-color: #f3f3f3;
+    }
+
+    span {
+      color: #fb837a;
+    }
+  }
+
+  &__btn {
+    //font-size: 2rem;
+    padding: 1em;
+  }
+}
+
+
+.color-red {
+  color: #fb837a;
+}
+
+
+.order {
+  text-align: left;
+
+  &__title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    line-height: 1.35;
+    color: #000000;
+    margin: 2rem 0;
+  }
+
+  &__row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0 2rem;
+  }
+
+  &__label {
+    flex: 1 1;
+    margin-bottom: 2rem;
+    display: block;
+  }
+
+  &__input {
+    width: 100%;
+    color: #000;
+    border-color: #000;
+
+    &:placeholder-shown,
+    &.empty {
+      border-color: #f3f3f3;
+    }
+
+    &::placeholder {
+      color: #d9d9d9;
+    }
+
+    &:active,
+    &:focus {
+      border-color: #fb837a;
+      color: #fb837a;
+    }
+  }
+
+  &__textarea {
+    height: 10rem;
+    padding-top: 1rem;
+  }
+
+  &__tel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-gap: 0 2rem;
+
+    .page__btn {
+      margin-right: 0;
+
+      &.empty {
+        pointer-events: none;
+        background-color: #f3f3f3;
+      }
+    }
+  }
+
+  &__file {
+    position: relative;
+    overflow: hidden;
+
+    &_input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    &_content {
+      width: 100%;
+      border: solid 2px #f3f3f3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 1.5;
+      color: #d9d9d9;
+      padding: 1.5rem;
+
+      img,
+      svg {
+        width: 3.2rem;
+        height: 4rem;
+        margin-bottom: 1.5rem;
+      }
+    }
+
+  }
+}
+
+.layers {
+  background-color: #000000;
+  color: #fff;
+
+  &__top {
+    line-height: 0;
+    font-size: 2.8rem;
+    padding: .7rem 1rem;
+  }
+
+  &__list {
+    background-color: #2b2b2b;
+  }
+
+  &__item {
+    background-color: #000000;
+  }
+
+  .calc__row {
+    border-bottom-color: #383838;
+  }
+
+  .calc__name,
+  .calc__price,
+  .calc__size {
+    color: #fff;
+  }
+
 }

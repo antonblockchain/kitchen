@@ -22,199 +22,139 @@
         </div>
 
         <div class="page__list">
-          <div class="page__item">
-            <label class="page__label page__label-large">
-              <span class="page__text">Материал корпуса</span>
-              <span class="page__label_w">
-                <input type="text" class="page__input" placeholder="" />
-                <a href="#prod" class="icon icon-search js-popup"></a>
-              </span>
-            </label>
-            <label class="page__label page__label-color">
-              <span class="page__text">Цвет</span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <label class="page__label">
-              <span class="page__text">М<sup>2</sup></span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <button class="page__btn btn" type="button">
-              <span class="icon icon-cube"></span>
-            </button>
-          </div>
+          <PageItem
+            v-for="(item, index) in list.slice().reverse()"
+            :key="item.id"
+            :item="item"
+            :id="item.id"
+            :index="index"
+            :isLast="list.length !== index + 1"
+          />
 
-          <div class="page__item page__item-black">
-            <label class="page__label page__label-large">
-              <span class="page__text">Материал корпуса 2</span>
-              <span class="page__label_w">
+          <div hidden>
+            <div class="page__item">
+              <label class="page__label page__label-large">
+                <span class="page__text">Комплект фасадов</span>
+                <span class="page__label_w">
+                  <input type="text" class="page__input" placeholder="" />
+                  <span class="icon icon-search"></span>
+                </span>
+              </label>
+              <label class="page__label page__label-color">
+                <span class="page__text">Цвет</span>
                 <input type="text" class="page__input" placeholder="" />
-                <span class="icon icon-search"></span>
-              </span>
-            </label>
-            <label class="page__label page__label-color">
-              <span class="page__text">Цвет</span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <label class="page__label">
-              <span class="page__text">М<sup>2</sup></span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <button class="page__btn page__btn-black btn" type="button">
-              <span class="icon icon-cube"></span>
-            </button>
-            <button class="page__btn page__btn-grey btn" type="button">
-              <span class="icon icon-plus"></span>
-            </button>
-          </div>
-
-          <div class="page__item page__item-red">
-            <label class="page__label page__label-type">
-              <span class="page__text">Тип</span>
-              <span class="page__label_select">
-                <select class="page__select js-select">
-                  <option value="Без типа">Без типа</option>
-                  <option value="Без типа">Без типа</option>
-                  <option value="Без типа">Без типа</option>
-                  <option value="Без типа">Без типа</option>
-                </select>
-              </span>
-            </label>
-            <label class="page__label">
-              <span class="page__text">Ширина</span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <label class="page__label">
-              <span class="page__text">Высота</span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <label class="page__label">
-              <span class="page__text">Глубина</span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <div class="page__label">
-              <span class="page__text">Полки</span>
-              <div class="page__input"></div>
+              </label>
+              <label class="page__label">
+                <span class="page__text">М<sup>2</sup></span>
+                <input type="text" class="page__input" placeholder="" />
+              </label>
+              <button class="page__btn btn" type="button">
+                <span class="icon icon-layers"></span>
+              </button>
             </div>
-            <label class="page__label page__label-res">
-              <span class="page__text">М<sup>2</sup></span>
-              <input type="text" class="page__input" readonly />
-            </label>
-          </div>
 
-          <div class="page__item">
-            <label class="page__label page__label-large">
-              <span class="page__text">Комплект фасадов</span>
-              <span class="page__label_w">
+            <div class="page__item page__item-black">
+              <label class="page__label page__label-large">
+                <span class="page__text">Комплект фасадов 2</span>
+                <span class="page__label_w">
+                  <input type="text" class="page__input" placeholder="" />
+                  <span class="icon icon-search"></span>
+                </span>
+              </label>
+              <label class="page__label page__label-color">
+                <span class="page__text">Цвет</span>
                 <input type="text" class="page__input" placeholder="" />
-                <span class="icon icon-search"></span>
-              </span>
-            </label>
-            <label class="page__label page__label-color">
-              <span class="page__text">Цвет</span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <label class="page__label">
-              <span class="page__text">М<sup>2</sup></span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <button class="page__btn btn" type="button">
-              <span class="icon icon-layers"></span>
-            </button>
-          </div>
+              </label>
+              <label class="page__label">
+                <span class="page__text">М<sup>2</sup></span>
+                <input type="text" class="page__input" placeholder="" />
+              </label>
+              <button class="page__btn page__btn-black btn" type="button">
+                <span class="icon icon-layers"></span>
+              </button>
+              <button class="page__btn page__btn-grey btn" type="button">
+                <span class="icon icon-plus"></span>
+              </button>
+            </div>
 
-          <div class="page__item page__item-black">
-            <label class="page__label page__label-large">
-              <span class="page__text">Комплект фасадов 2</span>
-              <span class="page__label_w">
+            <div class="page__item page__item-red">
+              <label class="page__label page__label-type">
+                <span class="page__text">Тип</span>
+                <span class="page__label_select">
+                  <select class="page__select js-select">
+                    <option value="Без типа">Без типа</option>
+                    <option value="Без типа">Без типа</option>
+                    <option value="Без типа">Без типа</option>
+                    <option value="Без типа">Без типа</option>
+                  </select>
+                </span>
+              </label>
+              <label class="page__label page__label-article">
+                <span class="page__text">Артикул</span>
                 <input type="text" class="page__input" placeholder="" />
-                <span class="icon icon-search"></span>
-              </span>
-            </label>
-            <label class="page__label page__label-color">
-              <span class="page__text">Цвет</span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <label class="page__label">
-              <span class="page__text">М<sup>2</sup></span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <button class="page__btn page__btn-black btn" type="button">
-              <span class="icon icon-layers"></span>
-            </button>
-            <button class="page__btn page__btn-grey btn" type="button">
-              <span class="icon icon-plus"></span>
-            </button>
-          </div>
+              </label>
+              <label class="page__label">
+                <span class="page__text">Ширина</span>
+                <input type="text" class="page__input" placeholder="" />
+              </label>
+              <label class="page__label">
+                <span class="page__text">Высота</span>
+                <input type="text" class="page__input" placeholder="" />
+              </label>
+              <label class="page__label page__label-res">
+                <span class="page__text">М<sup>2</sup></span>
+                <input type="text" class="page__input" readonly />
+              </label>
+            </div>
 
-          <div class="page__item page__item-red">
-            <label class="page__label page__label-type">
-              <span class="page__text">Тип</span>
-              <span class="page__label_select">
-                <select class="page__select js-select">
-                  <option value="Без типа">Без типа</option>
-                  <option value="Без типа">Без типа</option>
-                  <option value="Без типа">Без типа</option>
-                  <option value="Без типа">Без типа</option>
-                </select>
-              </span>
-            </label>
-            <label class="page__label page__label-article">
-              <span class="page__text">Артикул</span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <label class="page__label">
-              <span class="page__text">Ширина</span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <label class="page__label">
-              <span class="page__text">Высота</span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <label class="page__label page__label-res">
-              <span class="page__text">М<sup>2</sup></span>
-              <input type="text" class="page__input" readonly />
-            </label>
-          </div>
-
-          <div class="page__item" style="display: none">
-            <label class="page__label page__label-fill">
-              <span class="page__text">Фурнитура Петли</span>
-              <span class="page__label_w">
+            <div class="page__item">
+              <label class="page__label page__label-fill">
+                <span class="page__text">Фурнитура Петли</span>
+                <span class="page__label_w">
+                  <input type="text" class="page__input" placeholder="" />
+                  <span class="icon icon-search"></span>
+                </span>
+              </label>
+              <label class="page__label page__label-count">
+                <span class="page__text">Кол-во</span>
                 <input type="text" class="page__input" placeholder="" />
-                <span class="icon icon-search"></span>
-              </span>
-            </label>
-            <label class="page__label page__label-count">
-              <span class="page__text">Кол-во</span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <button class="page__btn page__btn-light btn" type="button">
-              <span class="icon icon-plus"></span>
-            </button>
-          </div>
-          <div class="page__item" style="display: none">
-            <label class="page__label page__label-fill">
-              <span class="page__text">Столешница</span>
-              <span class="page__label_w">
+              </label>
+              <button class="page__btn page__btn-light btn" type="button">
+                <span class="icon icon-plus"></span>
+              </button>
+            </div>
+            <div class="page__item">
+              <label class="page__label page__label-fill">
+                <span class="page__text">Столешница</span>
+                <span class="page__label_w">
+                  <input type="text" class="page__input" placeholder="" />
+                  <span class="icon icon-search"></span>
+                </span>
+              </label>
+              <label class="page__label page__label-color">
+                <span class="page__text">Цвет</span>
                 <input type="text" class="page__input" placeholder="" />
-                <span class="icon icon-search"></span>
-              </span>
-            </label>
-            <label class="page__label page__label-color">
-              <span class="page__text">Цвет</span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <label class="page__label page__label-count">
-              <span class="page__text">Кол-во</span>
-              <input type="text" class="page__input" placeholder="" />
-            </label>
-            <button class="page__btn page__btn-light btn" type="button">
-              <span class="icon icon-plus"></span>
-            </button>
+              </label>
+              <label class="page__label page__label-count">
+                <span class="page__text">Кол-во</span>
+                <input type="text" class="page__input" placeholder="" />
+              </label>
+              <button class="page__btn page__btn-light btn" type="button">
+                <span class="icon icon-plus"></span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
       <div class="page__right">
+        <pre style="line-height: 1; font-size: 0;">
+          <small>
+            <code style="font-size: 1.4rem">
+              {{ list }}
+            </code>
+          </small>
+        </pre>
+
         <div class="calc">
           <div class="calc__item">
             <div class="calc__head">
@@ -325,36 +265,26 @@
         </div>
       </div>
     </div>
-
-    <div id="prod" class="modals mfp-hide zoom-anim-dialog">
-      <div class="modals__content">
-        <label class="modals__label">
-          <input type="radio" class="modals__input" name="radio" />
-          <span class="modals__radio">
-            Fenix лазерная кромка, пластика с 2 сторон
-          </span>
-        </label>
-        <label class="modals__label">
-          <input type="radio" class="modals__input" name="radio" />
-          <span class="modals__radio">
-            Fenix лазерная кромка, пластика с 2 сторон
-          </span>
-        </label>
-        <label class="modals__label">
-          <input type="radio" class="modals__input" name="radio" />
-          <span class="modals__radio">
-            Fenix лазерная кромка, пластика с 2 сторон
-          </span>
-        </label>
-      </div>
-      <button class="modals__select btn" type="button">ВЫБРАТЬ</button>
-    </div>
   </div>
 </template>
 
 <script>
+import PageItem from "@/components/Page-item";
+
 export default {
   name: "Page",
+  components: { PageItem },
+  computed: {
+    list() {
+      console.log();
+      return this.$store.getters.list;
+    }
+  },
+  // watch: {
+  //   list(fbError) {
+  //     this.$error("Что-то пошло не так");
+  //   }
+  // },
   methods: {
     async logout() {
       await this.$store.dispatch("logout");

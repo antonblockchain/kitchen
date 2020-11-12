@@ -6,6 +6,7 @@ import store from "./store";
 import VueToast from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-default.css";
 import messagePlugin from "@/utils/message.plugin";
+import VueTheMask from "vue-the-mask";
 
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -36,5 +37,6 @@ firebase.auth().onAuthStateChanged(() => {
 
     Vue.use(VueToast);
     Vue.use(messagePlugin);
+    Vue.use(VueTheMask);
   }
 });
