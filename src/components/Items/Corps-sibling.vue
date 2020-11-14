@@ -102,7 +102,7 @@
 import CALC from "@/utils/calc";
 
 export default {
-  name: "Page-siblings",
+  name: "Corps-siblings",
   props: {
     id: Number,
     index: Number,

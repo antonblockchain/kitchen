@@ -376,6 +376,11 @@ body {
       .page__input {
         color: #ffffff;
       }
+
+      .vs__search, .vs__search:focus,
+      .vs__selected {
+        color: #fff;
+      }
     }
 
     &-grey {
@@ -571,9 +576,11 @@ body {
     outline: none;
     font-size: 1.6rem;
     font-weight: 600;
-  }
-  &__input[type="number"]{
-    appearance: none;
+
+    &-number {
+      padding: 0 .5rem;
+      text-align: center;
+    }
   }
 
   &__btn {
@@ -1083,4 +1090,49 @@ body {
     color: #fff;
   }
 
+}
+
+.ddd {
+  width: 100%;
+  background: none;
+  height: 3.8rem;
+  padding: 0 .5rem 0 1.5rem;
+  color: #000;
+  outline: none;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.vs__dropdown-toggle {
+  border: solid 2px #f3f3f3;
+  border-radius: 0;
+  padding: 0;
+  height: 3.8rem;
+}
+
+.vs__selected-options {
+  padding: 0;
+}
+
+.vs__search, .vs__search:focus {
+  margin: 0;
+  padding: 0 .1rem 0 1.5rem;
+}
+
+.vs__selected {
+  margin: 0;
+  padding: 0 .1rem 0 1.5rem;
+}
+
+.vs--single.vs--open .vs__selected {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.vs__actions {
+  padding: 0 1rem 0 .3rem;
+}
+
+.vs__clear {
+  display: none;
 }

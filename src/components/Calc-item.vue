@@ -2,23 +2,32 @@
   <div class="calc__item">
     <div class="calc__head">
       <div class="calc__head_title">ПРОСЧЕТ <span>А</span></div>
-      <div class="calc__nav">
+      <div
+        v-if="isOpenContent"
+        class="calc__nav"
+        :class="{ active: isOpenSettings }"
+      >
         <div class="calc__nav_menu">
           <a href="#" class="calc__nav_link">Редактировать</a>
           <a href="#" class="calc__nav_link">Дублировать</a>
           <a href="#" class="calc__nav_link">Удалить</a>
           <a href="#" class="calc__nav_link">%</a>
         </div>
-        <button class="calc__nav_toggle" type="button">
+        <button class="calc__nav_toggle" type="button" @click="toggleSetiings">
           <span class="icon icon-more"></span>
         </button>
       </div>
-      <button class="calc__show" type="button">
+      <button
+        v-if="!isOpenContent"
+        class="calc__show"
+        type="button"
+        @click="toggleContent"
+      >
         <span class="icon icon-down"></span>
       </button>
     </div>
 
-    <div class="calc__content">
+    <div class="calc__content" v-if="isOpenContent">
       <ul class="calc__list">
         {% for i in range(0, 7) -%}
         <li class="calc__row">
@@ -40,7 +49,7 @@
         </div>
       </div>
 
-      <button class="calc__toggle" type="button">
+      <button class="calc__toggle" type="button" @click="toggleContent">
         <span class="icon icon-down"></span>
       </button>
     </div>
@@ -49,7 +58,21 @@
 
 <script>
 export default {
-  name: "Calc-item"
+  name: "Calc-item",
+  data() {
+    return {
+      isOpenContent: !true,
+      isOpenSettings: false
+    };
+  },
+  methods: {
+    toggleContent() {
+      this.isOpenContent = !this.isOpenContent;
+    },
+    toggleSetiings() {
+      this.isOpenSettings = !this.isOpenSettings;
+    }
+  }
 };
 </script>
 

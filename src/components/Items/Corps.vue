@@ -50,7 +50,7 @@
       </button>
     </div>
 
-    <PageSiblings
+    <Siblings
       v-for="(sibling, index) in item.options"
       v-show="showParams"
       :key="sibling.id"
@@ -66,12 +66,12 @@
 </template>
 
 <script>
-import PageSiblings from "@/components/Page-siblings";
+import Siblings from "@/components/Items/Corps-sibling";
 import CALC from "@/utils/calc";
 
 export default {
-  name: "Page-item",
-  components: { PageSiblings },
+  name: "Corps",
+  components: { Siblings },
   props: {
     id: Number,
     index: Number,
@@ -80,6 +80,7 @@ export default {
   },
   data() {
     return {
+      category: "corps",
       showParams: false,
       itemName: this.item.name,
       itemColor: this.item.color,
@@ -95,7 +96,7 @@ export default {
       );
     },
     options() {
-      return this.$store.getters.getOptions["corps"];
+      return this.$store.getters.getOptions[this.category];
     }
   },
   watch: {
@@ -118,7 +119,7 @@ export default {
         square: 0,
         options: []
       };
-      this.$store.dispatch("addItem", newItem);
+      this.$store.dispatch("addItem", { category: this.category, newItem });
     },
     toggleParams() {
       if (this.item.options.length === 0) {

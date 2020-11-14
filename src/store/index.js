@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import auth from "@/store/auth";
 import data from "@/store/data";
+import options from "@/store/options";
 
 Vue.use(Vuex);
 
@@ -20,5 +21,5 @@ export default new Vuex.Store({
   getters: {
     error: state => state.error
   },
-  modules: { auth, data }
+  modules: { auth, data, options }
 });

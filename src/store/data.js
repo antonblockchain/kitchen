@@ -13,7 +13,7 @@ export default {
             corps: [
               {
                 id: 1,
-                name: "Brilliant",
+                name: "Brilliant 43",
                 color: "",
                 square: 0,
                 type: 0,
@@ -50,34 +50,8 @@ export default {
         ]
       }
     ],
-
-    list2: [
-      {
-        name: "A",
-        total: 0,
-        discount: 0,
-        corps: [
-          {
-            id: 1,
-            name: "Brilliant",
-            color: "",
-            square: 0,
-            type: 0,
-            options: []
-          }
-        ],
-        facades: [],
-        loops: [],
-        boxes: [],
-        mechanisms: [],
-        tabletop: [],
-        "tabletop-psc": [],
-        "wall-panel": [],
-        "wall-panel-psc": [],
-        handles: [],
-        other: []
-      }
-    ],
+    currentOrder: 0,
+    currentCalculation: 0,
     list: [
       {
         id: 1,
@@ -101,16 +75,14 @@ export default {
     ]
   },
   mutations: {
-    updateData(state, data) {
-      state.list = data;
-    },
-    addItem(state, newItem) {
-      const list = state.list;
-      state.list = [newItem, ...list];
+    addItem({ data, currentOrder, currentCalculation }, { category, newItem }) {
+      data[currentOrder].list[currentCalculation][category] = [
+        newItem,
+        ...data[currentOrder].list[currentCalculation][category]
+      ];
     },
     updateItem(state, { id, newData }) {
-      let list = state.list;
-      list = list.map(item => {
+      let list = state.list.map(item => {
         if (item.id === id) {
           return {
             ...item,
@@ -121,16 +93,15 @@ export default {
       });
       state.list = [...list];
     },
-    addSiblings(state, { parentId, newItem }) {
-      const list = state.list.map(item => {
+    addSiblings({ list }, { parentId, newItem }) {
+      list.map(item => {
         if (item.id === parentId) {
           item.options.push({
             ...newItem
           });
         }
-        return item;
+        // return item;
       });
-      state.list = [...list];
     },
     updateSiblings(state, { parentId, id, newData }) {
       let list = state.list.map(item => {
@@ -171,6 +142,12 @@ export default {
     },
     list: state => {
       return state.list;
+    },
+    currentOrder: state => {
+      return state.data[state.currentOrder];
+    },
+    currentCalculation: state => {
+      return state.data[state.currentOrder].list[state.currentCalculation];
     }
   }
 };

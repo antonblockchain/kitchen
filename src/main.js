@@ -7,6 +7,8 @@ import VueToast from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-default.css";
 import messagePlugin from "@/utils/message.plugin";
 import VueTheMask from "vue-the-mask";
+import vSelect from "vue-select";
+import VueInputAutoWidth from "vue-input-autowidth";
 
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -38,5 +40,16 @@ firebase.auth().onAuthStateChanged(() => {
     Vue.use(VueToast);
     Vue.use(messagePlugin);
     Vue.use(VueTheMask);
+    Vue.use(VueInputAutoWidth);
+
+    vSelect.props.components.default = () => ({
+      OpenIndicator: {
+        render: createElement =>
+          createElement("span", {
+            class: "icon icon-down"
+          })
+      }
+    });
+    Vue.component("v-select", vSelect);
   }
 });

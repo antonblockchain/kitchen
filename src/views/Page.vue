@@ -4,31 +4,37 @@
       <div class="page__left">
         <div class="page__header">
           <div class="page__header_title">
-            ЭТО<b>ПРОСЧЕТ <span>В</span></b>
+            ЭТО<b>
+              ПРОСЧЕТ <span>{{ currentCalculation.name }}</span>
+            </b>
           </div>
           <div class="page__header_info">
-            Заявка #231133-<span>10</span> Для
+            Заявка #<span>{{ order }}</span> Для
             <label>
-              <span class="page__header_buffer">ФИО</span>
               <input
                 type="text"
                 class="page__header_name"
-                value=""
+                v-autowidth="{
+                  maxWidth: '20rem',
+                  minWidth: '3.6rem',
+                  comfortZone: 0
+                }"
+                v-model="user"
                 placeholder="ФИО"
               />
             </label>
-            от 27.07.2020
+            от {{ time }}
           </div>
         </div>
 
         <div class="page__list">
-          <PageItem
-            v-for="(item, index) in list.slice().reverse()"
+          <Corps
+            v-for="(item, index) in corpsList.slice().reverse()"
             :key="item.id"
             :item="item"
             :id="item.id"
             :index="index"
-            :isLast="list.length !== index + 1"
+            :isLast="corpsList.length !== index + 1"
           />
 
           <div hidden>
@@ -150,6 +156,15 @@
         <pre style="line-height: 1; font-size: 0;">
           <small>
             <code style="font-size: 1.2rem">
+<!--              {{ optionsList }}-->
+
+              {{ currentCalculation }}
+            </code>
+          </small>
+        </pre>
+        <pre style="line-height: 1; font-size: 0;">
+          <small>
+            <code style="font-size: 1.2rem">
               {{ list }}
             </code>
           </small>
@@ -175,23 +190,44 @@
 </template>
 
 <script>
-import PageItem from "@/components/Page-item";
+import Corps from "@/components/Items/Corps";
 import CalcItem from "@/components/Calc-item";
 
 export default {
   name: "Page",
-  components: { PageItem, CalcItem },
+  components: { Corps, CalcItem },
+  data() {
+    return {
+      order: null,
+      user: null,
+      time: null
+    };
+  },
   computed: {
     list() {
-      console.log();
       return this.$store.getters.list;
+    },
+    optionsList() {
+      return this.$store.getters.getOptions;
+    },
+    currentOrder() {
+      return this.$store.getters.currentOrder;
+    },
+    currentCalculation() {
+      return this.$store.getters.currentCalculation;
+    },
+    corpsList() {
+      return this.currentCalculation["corps"];
     }
   },
-  // watch: {
-  //   list(fbError) {
-  //     this.$error("Что-то пошло не так");
-  //   }
-  // },
+  created() {
+    this.$store.dispatch("fetchOptions");
+
+    const currentOrder = this.$store.getters.currentOrder;
+    this.order = currentOrder.order;
+    this.user = currentOrder.user;
+    this.time = currentOrder.time;
+  },
   methods: {
     async logout() {
       await this.$store.dispatch("logout");
