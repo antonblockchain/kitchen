@@ -5,6 +5,9 @@ export default {
   square(type, ...arg) {
     let res;
     switch (type) {
+      case 0:
+        res = 0;
+        break;
       case 1:
         res = this.squareDown(...arg);
         break;
@@ -12,7 +15,8 @@ export default {
         res = this.squareUp(...arg);
         break;
       case 3:
-        res = this.squarePenal(...arg);
+        res = this.squareUp(...arg);
+        // res = this.squarePenal(...arg);
         break;
       default:
         return null;
@@ -35,9 +39,9 @@ export default {
     return (b * c * 2 + c * (a - 32) * 2 + (a - 32) * (c - 20) * n) * 0.000001;
   },
   squareAB(a, b) {
-    return this.fixNumber(a * b);
+    return this.fixNumber(a * b * 0.000001);
   },
   generateID() {
-    return +(Math.random() * 10000).toFixed(0);
+    return Math.floor(Math.random() * 899999 + 100000);
   }
 };

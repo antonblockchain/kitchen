@@ -3,7 +3,7 @@
     <div class="page__item" :class="{ 'page__item-black': isLast }">
       <label class="page__label page__label-large">
         <span class="page__text">
-          Материал корпуса {{ index !== 0 ? index + 1 : null }}
+          Комплект фасадов {{ index !== 0 ? index + 1 : null }}
         </span>
         <v-select
           :options="options"
@@ -38,7 +38,7 @@
         type="button"
         @click="toggleParams"
       >
-        <span class="icon icon-cube"></span>
+        <span class="icon icon-layers"></span>
       </button>
       <button
         class="page__btn page__btn-light btn"
@@ -66,11 +66,11 @@
 </template>
 
 <script>
-import Siblings from "@/components/Items/Corps-sibling";
+import Siblings from "@/components/Items/Facades-sibling";
 import CALC from "@/utils/calc";
 
 export default {
-  name: "Corps",
+  name: "Facades",
   components: { Siblings },
   props: {
     id: Number,
@@ -80,7 +80,7 @@ export default {
   },
   data() {
     return {
-      category: "corps",
+      category: "facades",
       showParams: false,
       itemName: this.item.name,
       itemColor: this.item.color,
@@ -113,7 +113,7 @@ export default {
     itemColor() {
       this.updateItem();
     },
-    square() {
+    total() {
       this.updateItem();
     }
   },
@@ -140,8 +140,7 @@ export default {
           type: 0,
           width: null,
           height: null,
-          depth: null,
-          count: null
+          article: ""
         };
         this.$store.dispatch("addSiblings", {
           category: this.category,

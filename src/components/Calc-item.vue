@@ -1,19 +1,45 @@
 <template>
   <div class="calc__item">
     <div class="calc__head">
-      <div class="calc__head_title">ПРОСЧЕТ <span>А</span></div>
+      <div class="calc__head_title">
+        ПРОСЧЕТ <span>{{ name }}</span>
+      </div>
       <div
         v-if="isOpenContent"
         class="calc__nav"
         :class="{ active: isOpenSettings }"
       >
         <div class="calc__nav_menu">
-          <a href="#" class="calc__nav_link">Редактировать</a>
-          <a href="#" class="calc__nav_link">Дублировать</a>
-          <a href="#" class="calc__nav_link">Удалить</a>
-          <a href="#" class="calc__nav_link">%</a>
+          <button type="button" class="calc__nav_link" @click="editCalculation">
+            Редактировать
+          </button>
+          <button type="button" class="calc__nav_link" @click="copyCalculation">
+            Дублировать
+          </button>
+          <button
+            type="button"
+            class="calc__nav_link"
+            @click="deleteCalculation"
+          >
+            Удалить
+          </button>
+          <label>
+            <input
+              type="text"
+              class="calc__nav_link"
+              v-autowidth="{
+                maxWidth: '20rem',
+                minWidth: '2rem',
+                comfortZone: 0
+              }"
+              v-model="discount"
+              v-mask="'##'"
+              placeholder="%"
+              v-int
+            />
+          </label>
         </div>
-        <button class="calc__nav_toggle" type="button" @click="toggleSetiings">
+        <button class="calc__nav_toggle" type="button" @click="toggleSettings">
           <span class="icon icon-more"></span>
         </button>
       </div>
@@ -29,24 +55,55 @@
 
     <div class="calc__content" v-if="isOpenContent">
       <ul class="calc__list">
-        {% for i in range(0, 7) -%}
-        <li class="calc__row">
-          <div class="calc__name"><b>Мтериал корпуса:</b> Базовый, Серый</div>
-          <div class="calc__size">20 м<sup>2</sup></div>
-          <div class="calc__price">34 000 ₽</div>
-          <button class="calc__remove" type="button">
-            <span class="icon icon-close"></span>
-          </button>
-        </li>
-        {%- endfor %}
+        <CalcSibling
+          v-for="(item, index) in corpsList.slice().reverse()"
+          :key="item.id"
+          :title="'Материал корпуса'"
+          :item="item"
+          :index="index"
+          :category="'corps'"
+        />
+        <CalcSibling
+          v-for="(item, index) in facadesList.slice().reverse()"
+          :key="item.id"
+          :title="'Комплект фасадов'"
+          :item="item"
+          :index="index"
+          :category="'facades'"
+        />
       </ul>
 
       <div class="calc__total">
         <div class="calc__total_title">ИТОГО:</div>
-        <div class="calc__total_price">
-          853 000 ₽<sup>-10%</sup>
-          <del>999 000 ₽</del>
+        <div v-if="discount > 0" class="calc__total_price">
+          {{ finalPrice }} ₽<sup>-{{ discount }}%</sup>
+          <del>{{ formatPrice(total) }} ₽</del>
         </div>
+        <div v-else class="calc__total_price">{{ total }} ₽</div>
+      </div>
+
+      <div class="layers">
+        <button class="layers__top" type="button" @click="toggleDetails">
+          <span class="icon icon-layers"></span>
+        </button>
+        <ul v-if="isOpenDetails" class="layers__list">
+          <LayersItem
+            v-for="(item, index) in corpsList.slice().reverse()"
+            :key="item.id"
+            :title="'Материал корпуса'"
+            :item="item"
+            :index="index"
+            :category="'corps'"
+          />
+          <LayersItem
+            v-for="(item, index) in facadesList.slice().reverse()"
+            :key="item.id"
+            :title="'Комплект фасадов'"
+            :item="item"
+            :index="index"
+            :category="'facades'"
+          />
+        </ul>
       </div>
 
       <button class="calc__toggle" type="button" @click="toggleContent">
@@ -57,23 +114,79 @@
 </template>
 
 <script>
+import wNumb from "wnumb";
+import CalcSibling from "@/components/Calc-sibling";
+import LayersItem from "@/components/Layers-item";
+
 export default {
   name: "Calc-item",
+  components: { LayersItem, CalcSibling },
+  props: {
+    item: Object,
+    index: Number
+  },
   data() {
     return {
-      isOpenContent: !true,
-      isOpenSettings: false
+      isOpenContent: true,
+      isOpenSettings: !false,
+      isOpenDetails: false,
+      name: this.item.name,
+      discount: this.item.discount
     };
+  },
+  watch: {
+    // discount(value) {
+    //   const num = parseInt(value);
+    //   if (num > 100) {
+    //     this.discount = 100;
+    //   }
+    // }
+  },
+  computed: {
+    finalPrice() {
+      return this.formatPrice((this.total * (100 - this.discount)) / 100);
+    },
+    corpsList() {
+      return this.item.corps;
+    },
+    facadesList() {
+      return this.item.facades;
+    },
+    total() {
+      return this.item.total;
+    }
+    // discount() {
+    //   return this.item.discount;
+    // }
+    // currentItem() {
+    //   return this.$store.getters.calculationList[this.index];
+    // }
   },
   methods: {
     toggleContent() {
       this.isOpenContent = !this.isOpenContent;
     },
-    toggleSetiings() {
+    toggleSettings() {
       this.isOpenSettings = !this.isOpenSettings;
+    },
+    formatPrice(number) {
+      return wNumb({
+        decimals: 0,
+        thousand: " "
+      }).to(number);
+    },
+    toggleDetails() {
+      this.isOpenDetails = !this.isOpenDetails;
+    },
+    editCalculation() {
+      this.$store.dispatch("editCalculation", { name: this.name });
+    },
+    copyCalculation() {
+      this.$store.dispatch("copyCalculation", { name: this.name });
+    },
+    deleteCalculation() {
+      this.$store.dispatch("deleteCalculation", { name: this.name });
     }
   }
 };
 </script>
-
-<style scoped></style>

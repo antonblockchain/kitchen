@@ -2,7 +2,7 @@
   <div>
     <div v-show="showCalc" class="page__item page__item-grey">
       <label class="page__label page__label-large">
-        <span class="page__text">Деталь корпуса {{ index + 1 }}</span>
+        <span class="page__text">Деталь фасадов {{ index + 1 }}</span>
         <v-select
           :options="options"
           :reduce="item => item.name"
@@ -24,12 +24,8 @@
         />
       </label>
 
-      <button
-        class="page__btn page__btn-calc btn"
-        @click="toggleCalc"
-        type="button"
-      >
-        <span class="icon icon-calc"></span>
+      <button class="page__btn btn" @click="toggleCalc" type="button">
+        <span class="icon icon-layers"></span>
       </button>
       <button
         v-if="isLast"
@@ -54,6 +50,15 @@
           />
         </span>
       </label>
+      <label class="page__label page__label-article">
+        <span class="page__text">Артикул</span>
+        <input
+          type="text"
+          class="page__input"
+          v-model.trim="itemArticle"
+          placeholder=""
+        />
+      </label>
       <label class="page__label">
         <span class="page__text">Ширина</span>
         <input
@@ -70,24 +75,6 @@
           class="page__input"
           v-mask="'########'"
           v-model.number="itemHeight"
-        />
-      </label>
-      <label class="page__label">
-        <span class="page__text">Глубина</span>
-        <input
-          type="text"
-          class="page__input"
-          v-mask="'########'"
-          v-model.number="itemDepth"
-        />
-      </label>
-      <label class="page__label">
-        <span class="page__text">Полки</span>
-        <input
-          type="text"
-          class="page__input"
-          v-mask="'########'"
-          v-model.number="itemCount"
         />
       </label>
       <div class="page__label page__label-res">
@@ -109,7 +96,7 @@
 import CALC from "@/utils/calc";
 
 export default {
-  name: "Corps-siblings",
+  name: "Facades-sibling",
   props: {
     id: Number,
     index: Number,
@@ -121,7 +108,7 @@ export default {
   },
   data() {
     return {
-      category: "corps",
+      category: "facades",
       hasSiblings: false,
       showCalc: true,
       itemName: this.item.name,
@@ -129,8 +116,7 @@ export default {
       itemType: this.item.type,
       itemWidth: this.item.width,
       itemHeight: this.item.height,
-      itemDepth: this.item.depth,
-      itemCount: this.item.count,
+      itemArticle: this.item.article,
       optionsType: [
         { name: "Низ", type: 1 },
         { name: "Верх", type: 2 },
@@ -140,13 +126,7 @@ export default {
   },
   computed: {
     square() {
-      const res = CALC.square(
-        this.itemType,
-        this.itemWidth,
-        this.itemHeight,
-        this.itemDepth,
-        this.itemCount
-      );
+      const res = CALC.squareAB(this.itemWidth, this.itemHeight);
       if (res > 0) {
         return res;
       }
@@ -163,7 +143,7 @@ export default {
     itemColor() {
       this.updateItem();
     },
-    itemType() {
+    itemArticle() {
       this.updateItem();
     },
     square() {
@@ -182,8 +162,7 @@ export default {
         type: 0,
         width: null,
         height: null,
-        depth: null,
-        count: null
+        article: ""
       };
       this.$store.dispatch("addSiblings", {
         category: this.category,
@@ -212,8 +191,7 @@ export default {
         type: this.itemType,
         width: this.itemWidth,
         height: this.itemHeight,
-        depth: this.itemDepth,
-        count: this.itemCount
+        article: this.itemArticle
       };
       this.$store.dispatch("updateSiblings", {
         category: this.category,

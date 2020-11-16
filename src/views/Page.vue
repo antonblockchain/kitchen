@@ -30,11 +30,20 @@
         <div class="page__list">
           <Corps
             v-for="(item, index) in corpsList.slice().reverse()"
-            :key="item.id"
+            :key="item.id + 11"
             :item="item"
             :id="item.id"
             :index="index"
             :isLast="corpsList.length !== index + 1"
+          />
+
+          <Facades
+            v-for="(item, index) in facadesList.slice().reverse()"
+            :key="item.id + 2"
+            :item="item"
+            :id="item.id"
+            :index="index"
+            :isLast="facadesList.length !== index + 1"
           />
 
           <div hidden>
@@ -153,29 +162,29 @@
         </div>
       </div>
       <div class="page__right">
-        <pre style="line-height: 1; font-size: 0;">
-          <small>
-            <code style="font-size: 1.2rem">
-<!--              {{ optionsList }}-->
-
-              {{ currentCalculation }}
-            </code>
-          </small>
-        </pre>
-        <pre style="line-height: 1; font-size: 0;">
-          <small>
-            <code style="font-size: 1.2rem">
-              {{ list }}
-            </code>
-          </small>
-        </pre>
-
+        <!--        <pre style="line-height: 1; font-size: 0;">-->
+        <!--          <small>-->
+        <!--            <code style="font-size: 1.1rem">-->
+        <!--              {{ optionsList }}-->
+        <!--              {{ facadesList }}-->
+        <!--            </code>-->
+        <!--          </small>-->
+        <!--        </pre>-->
         <div class="calc">
-          <CalcItem />
-          <CalcItem />
+          <CalcItem
+            v-for="(calc, index) in calculationList"
+            :index="index"
+            :key="calc.name"
+            :item="calc"
+          />
         </div>
 
-        <button class="calc__add btn" type="button">
+        <button
+          v-if="calculationList.length < 3"
+          class="calc__add btn"
+          type="button"
+          @click="addCalculation"
+        >
           <span class="icon icon-plus"></span>
         </button>
         <div class="calc__bottom">
@@ -191,11 +200,13 @@
 
 <script>
 import Corps from "@/components/Items/Corps";
+import Facades from "@/components/Items/Facades";
 import CalcItem from "@/components/Calc-item";
+import wNumb from "wnumb";
 
 export default {
   name: "Page",
-  components: { Corps, CalcItem },
+  components: { Corps, Facades, CalcItem },
   data() {
     return {
       order: null,
@@ -204,8 +215,8 @@ export default {
     };
   },
   computed: {
-    list() {
-      return this.$store.getters.list;
+    calculationList() {
+      return this.$store.getters.calculationList;
     },
     optionsList() {
       return this.$store.getters.getOptions;
@@ -218,20 +229,28 @@ export default {
     },
     corpsList() {
       return this.currentCalculation["corps"];
+    },
+    facadesList() {
+      return this.currentCalculation["facades"];
     }
   },
   created() {
     this.$store.dispatch("fetchOptions");
 
-    const currentOrder = this.$store.getters.currentOrder;
-    this.order = currentOrder.order;
-    this.user = currentOrder.user;
-    this.time = currentOrder.time;
+    const { order, user, time } = this.$store.getters.currentOrder;
+    this.order = wNumb({
+      thousand: "-"
+    }).to(order);
+    this.user = user;
+    this.time = time;
   },
   methods: {
     async logout() {
       await this.$store.dispatch("logout");
       this.$router.push("/");
+    },
+    addCalculation() {
+      this.$store.dispatch("addCalculation");
     }
   }
 };

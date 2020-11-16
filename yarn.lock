@@ -9107,6 +9107,11 @@ vue-input-autowidth@^1.0.10:
   dependencies:
     es6-object-assign "^1.1.0"
 
+vue-input-only-number@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vue-input-only-number/-/vue-input-only-number-1.1.0.tgz#4a738f3696bc046273ed2af715bb3abc508da0d1"
+  integrity sha512-rtDBxlY0fHwtIbkzVN65W14tdm3LW3oyt7CfkDtJ2tTjicGlu7274MF/jQMk+ze3cSiV9DwLew5NN8a1fML0jQ==
+
 "vue-loader-v16@npm:vue-loader@^16.0.0-beta.7":
   version "16.0.0-rc.0"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-16.0.0-rc.0.tgz#2eac4bd7c85341ac12cbf4cc82a908cfcc83d1a8"
@@ -9388,6 +9393,11 @@ which@^2.0.1:
   integrity sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==
   dependencies:
     isexe "^2.0.0"
+
+wnumb@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/wnumb/-/wnumb-1.2.0.tgz#f6fa5bfa739b9ca3b1e472094e1feeeb189484d9"
+  integrity sha512-eYut5K/dW7usfk/Mwm6nxBNoTPp/uP7PlXld+hhg7lDtHLdHFnNclywGYM9BRC7Ohd4JhwuHg+vmOUGfd3NhVA==
 
 word-wrap@~1.2.3:
   version "1.2.3"

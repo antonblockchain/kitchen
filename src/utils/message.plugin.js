@@ -1,6 +1,5 @@
 export default {
-  // eslint-disable-next-line no-unused-vars
-  install(Vue, options) {
+  install(Vue) {
     Vue.prototype.$message = function(text) {
       Vue.$toast.info(text);
     };

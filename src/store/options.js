@@ -24,13 +24,13 @@ export default {
       try {
         await new Promise(resolve => setTimeout(resolve, 1500));
         const data = [
-          { name: "a", type: 2 },
-          { name: "b", type: 3 },
-          { name: "c", type: 4 },
-          { name: "Brilliant", type: 5 }
+          { name: "a", type: 2, price: 100 },
+          { name: "Brilliant", type: 5, price: 400 },
+          { name: "b", type: 3, price: 200 },
+          { name: "c", type: 4, price: 300 }
         ];
-        const name = "corps";
-        commit("setOptionsByName", { name, data });
+        commit("setOptionsByName", { name: "corps", data });
+        commit("setOptionsByName", { name: "facades", data });
       } catch (e) {
         commit("setError", e);
         console.log(e);
