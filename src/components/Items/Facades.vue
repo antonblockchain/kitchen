@@ -2,9 +2,7 @@
   <div>
     <div class="page__item" :class="{ 'page__item-black': isLast }">
       <label class="page__label page__label-large">
-        <span class="page__text">
-          Комплект фасадов {{ index !== 0 ? index + 1 : null }}
-        </span>
+        <span class="page__text"> Комплект фасадов {{ currentIndex }} </span>
         <v-select
           :options="options"
           :reduce="item => item.name"
@@ -68,6 +66,7 @@
 <script>
 import Siblings from "@/components/Items/Facades-sibling";
 import CALC from "@/utils/calc";
+import ItemTemplate from "@/utils/ItemTemplate";
 
 export default {
   name: "Facades",
@@ -88,6 +87,9 @@ export default {
     };
   },
   computed: {
+    currentIndex() {
+      return this.index !== 0 ? this.index + 1 : "";
+    },
     square() {
       return CALC.fixNumber(
         this.item.options.reduce((acc, item) => {
@@ -119,33 +121,22 @@ export default {
   },
   methods: {
     cloneItem() {
-      const newItem = {
-        id: CALC.generateID(),
-        name: "",
-        total: 0,
-        color: "",
-        square: 0,
-        options: []
-      };
-      this.$store.dispatch("addItem", { category: this.category, newItem });
+      this.$store.dispatch("addItem", {
+        category: this.category,
+        newItem: ItemTemplate[this.category]().item
+      });
     },
     toggleParams() {
       if (this.item.options.length === 0) {
-        const newItem = {
-          id: CALC.generateID(),
+        const newSibling = {
+          ...ItemTemplate[this.category]().sibling,
           name: this.item.name,
-          price: 0,
-          color: this.item.color,
-          square: 0,
-          type: 0,
-          width: null,
-          height: null,
-          article: ""
+          color: this.item.color
         };
         this.$store.dispatch("addSiblings", {
           category: this.category,
           parentId: this.item.id,
-          newItem
+          newItem: newSibling
         });
       }
       this.showParams = !this.showParams;

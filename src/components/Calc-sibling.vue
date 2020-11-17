@@ -6,7 +6,7 @@
     </div>
     <div class="calc__size">{{ square }} м<sup>2</sup></div>
     <div class="calc__price">{{ price }} ₽</div>
-    <button class="calc__remove" type="button" @click="deleteSibling">
+    <button class="calc__remove" type="button" @click="deleteItem">
       <span class="icon icon-close"></span>
     </button>
   </li>
@@ -21,7 +21,8 @@ export default {
     title: String,
     item: Object,
     index: Number,
-    category: String
+    category: String,
+    letter: String
   },
   data() {
     return {};
@@ -47,8 +48,12 @@ export default {
     }
   },
   methods: {
-    deleteSibling() {
-      console.log("delete");
+    deleteItem() {
+      this.$store.dispatch("deleteItem", {
+        category: this.category,
+        id: this.item.id,
+        letter: this.letter
+      });
     }
   }
 };

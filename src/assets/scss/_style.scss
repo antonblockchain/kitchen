@@ -427,11 +427,14 @@ body {
     }
 
     &-type {
-      flex-basis: 23.3%;
+      flex-basis: 21%;
     }
 
     &-article {
       flex-basis: 25.6%;
+    }
+    &-count {
+      flex-basis: 23.3%;
     }
 
     &-large {
@@ -641,6 +644,9 @@ body {
       background: none;
       color: #fb837a;
     }
+    &[disabled]{
+      opacity: 0;
+    }
 
     .icon-plus {
       font-size: 1.8rem;
@@ -711,8 +717,16 @@ body {
       transition: all .2s ease-in-out;
       border: 0;
       background: none;
-      padding: 0;
+      padding: 1rem 0;
       outline: none;
+      cursor: pointer;
+      &[type="text"]{
+        cursor: text;
+        &:focus,
+        &:hover {
+          opacity: 1;
+        }
+      }
       &::placeholder{
         color: #fff;
       }

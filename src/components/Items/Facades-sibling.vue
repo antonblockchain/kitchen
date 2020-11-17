@@ -94,6 +94,7 @@
 
 <script>
 import CALC from "@/utils/calc";
+import ItemTemplate from "@/utils/ItemTemplate";
 
 export default {
   name: "Facades-sibling",
@@ -153,21 +154,15 @@ export default {
   methods: {
     cloneItem() {
       this.hasSiblings = true;
-      const newItem = {
-        id: CALC.generateID(),
+      const newSibling = {
+        ...ItemTemplate[this.category]().sibling,
         name: this.defaultName,
-        price: 0,
-        color: this.defaultColor,
-        square: 0,
-        type: 0,
-        width: null,
-        height: null,
-        article: ""
+        color: this.defaultColor
       };
       this.$store.dispatch("addSiblings", {
         category: this.category,
         parentId: this.parentId,
-        newItem
+        newItem: newSibling
       });
     },
     toggleCalc() {

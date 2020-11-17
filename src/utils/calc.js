@@ -1,3 +1,5 @@
+import ItemTemplate from "@/utils/ItemTemplate";
+
 export default {
   fixNumber(number) {
     return Math.round(number * 100) / 100;
@@ -15,8 +17,7 @@ export default {
         res = this.squareUp(...arg);
         break;
       case 3:
-        res = this.squareUp(...arg);
-        // res = this.squarePenal(...arg);
+        res = this.squarePenal(...arg);
         break;
       default:
         return null;
@@ -43,5 +44,27 @@ export default {
   },
   generateID() {
     return Math.floor(Math.random() * 899999 + 100000);
+  },
+  uniqueLetter(arr) {
+    let str = "АБВ";
+    arr.forEach(item => {
+      str = str.split(item.name).join("");
+    });
+    return str[0];
+  },
+  rewriteID(obj) {
+    const newItem = JSON.parse(JSON.stringify(obj));
+    const changeID = arr => {
+      arr.forEach(item => {
+        item.id = this.generateID();
+        if (item.options) {
+          changeID(item.options);
+        }
+      });
+    };
+
+    ItemTemplate.listCategory().forEach(item => changeID(newItem[item]));
+
+    return newItem;
   }
 };

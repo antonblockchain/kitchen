@@ -1,256 +1,42 @@
 import CALC from "@/utils/calc";
+import ItemTemplate from "@/utils/ItemTemplate";
 
 export default {
   state: {
     currentOrder: 0,
     currentCalculation: 0,
-    data: [
-      {
-        order: 894291,
-        user: "Ткаченко В. Д.",
-        time: "27.07.2020",
-        list: [
-          {
-            name: "А",
-            total: 162516,
-            discount: 10,
-            corps: [
-              {
-                id: 111111,
-                name: "Brilliant",
-                total: 11264,
-                color: "Red",
-                square: 28.16,
-                options: [
-                  {
-                    id: 222222,
-                    name: "Brilliant",
-                    price: 400,
-                    color: "",
-                    square: 8.76,
-                    type: 2,
-                    width: 111,
-                    height: 333,
-                    depth: 333,
-                    count: 343
-                  },
-                  {
-                    id: 33333,
-                    name: "Brilliant",
-                    price: 400,
-                    color: "",
-                    square: 19.4,
-                    type: 1,
-                    width: 111,
-                    height: 222,
-                    depth: 333,
-                    count: 777
-                  }
-                ]
-              },
-              {
-                id: 44444,
-                name: "Brilliant",
-                total: 151252,
-                color: "Black f",
-                square: 378.13,
-                options: [
-                  {
-                    id: 555555,
-                    name: "Brilliant",
-                    price: 400,
-                    color: "",
-                    square: 32.7,
-                    type: 1,
-                    width: 333,
-                    height: 333,
-                    depth: 333,
-                    count: 343
-                  },
-                  {
-                    id: 6666666,
-                    name: "Brilliant",
-                    price: 400,
-                    color: "",
-                    square: 345.43,
-                    type: 3,
-                    width: 3323,
-                    height: 333,
-                    depth: 333,
-                    count: 333
-                  }
-                ]
-              }
-            ],
-            facades: [
-              {
-                id: 6901,
-                name: "",
-                color: "",
-                square: 0,
-                options: []
-              }
-            ],
-            loops: [],
-            boxes: [],
-            mechanisms: [],
-            tabletop: [],
-            "tabletop-psc": [],
-            "wall-panel": [],
-            "wall-panel-psc": [],
-            handles: [],
-            other: []
-          },
-          {
-            name: "Б",
-            total: 290860,
-            discount: 10,
-            corps: [
-              {
-                id: 2270,
-                name: "Brilliant",
-                total: 151252,
-                color: "Black",
-                square: 378.13,
-                options: [
-                  {
-                    id: 111406,
-                    name: "Brilliant",
-                    price: 400,
-                    color: "",
-                    square: 32.7,
-                    type: 1,
-                    width: 333,
-                    height: 333,
-                    depth: 333,
-                    count: 343
-                  },
-                  {
-                    id: 34343,
-                    name: "Brilliant",
-                    price: 400,
-                    color: "",
-                    square: 345.43,
-                    type: 3,
-                    width: 3323,
-                    height: 333,
-                    depth: 333,
-                    count: 333
-                  }
-                ]
-              },
-              {
-                id: 413416,
-                name: "Brilliant",
-                total: 151252,
-                color: "Black",
-                square: 378.13,
-                options: [
-                  {
-                    id: 114065,
-                    name: "Brilliant",
-                    price: 400,
-                    color: "",
-                    square: 32.7,
-                    type: 1,
-                    width: 333,
-                    height: 333,
-                    depth: 333,
-                    count: 343
-                  },
-                  {
-                    id: 43432,
-                    name: "Brilliant",
-                    price: 400,
-                    color: "",
-                    square: 345.43,
-                    type: 3,
-                    width: 3323,
-                    height: 333,
-                    depth: 333,
-                    count: 333
-                  }
-                ]
-              }
-            ],
-            facades: [
-              {
-                id: 6901,
-                name: "",
-                color: "",
-                square: 0,
-                options: []
-              }
-            ],
-            loops: [],
-            boxes: [],
-            mechanisms: [],
-            tabletop: [],
-            "tabletop-psc": [],
-            "wall-panel": [],
-            "wall-panel-psc": [],
-            handles: [],
-            other: []
-          }
-        ]
-      }
-    ]
+    data: [ItemTemplate.fakeData()]
   },
   mutations: {
     copyCalculation({ data, currentOrder }, { name }) {
       if (data[currentOrder].list.length < 3) {
-        let str = "АБВ";
-        let newItem;
-        data[currentOrder].list.forEach(item => {
-          str = str.split(item.name).join("");
-          if (item.name === name) {
-            newItem = { ...item };
-          }
-        });
-        console.log(str[0]);
-        newItem.name = str[0];
-        data[currentOrder].list.push(newItem);
+        let newItem = data[currentOrder].list.find(item => item.name === name);
+
+        let newItem2 = CALC.rewriteID(newItem);
+        newItem2.name = CALC.uniqueLetter(data[currentOrder].list);
+
+        data[currentOrder].list.push(newItem2);
       } else {
         alert("Максимум");
       }
     },
     addCalculation(state) {
-      let str = "АБВ";
-      state.data[state.currentOrder].list.forEach(item => {
-        str = str.split(item.name).join("");
-      });
+      let newLetter = CALC.uniqueLetter(state.data[state.currentOrder].list);
       state.data[state.currentOrder].list.push({
-        name: str[0],
+        name: newLetter,
         total: 0,
         discount: null,
-        corps: [
-          {
-            id: CALC.generateID(),
-            name: "",
-            total: 0,
-            color: "",
-            square: 0,
-            options: []
-          }
-        ],
-        facades: [
-          {
-            id: CALC.generateID(),
-            name: "",
-            color: "",
-            square: 0,
-            options: []
-          }
-        ],
-        loops: [],
-        boxes: [],
-        mechanisms: [],
-        tabletop: [],
-        "tabletop-psc": [],
-        "wall-panel": [],
-        "wall-panel-psc": [],
-        handles: [],
-        other: []
+        corps: [ItemTemplate.corps().item],
+        facades: [ItemTemplate.facades().item],
+        loops: [ItemTemplate.loops().item],
+        boxes: [ItemTemplate.boxes().item],
+        mechanisms: [ItemTemplate.mechanisms().item],
+        tabletop: [ItemTemplate.tabletop().item],
+        tabletop_psc: [ItemTemplate.tabletop_psc().item],
+        wall_panel: [ItemTemplate.wall_panel().item],
+        wall_panel_psc: [ItemTemplate.wall_panel_psc().item],
+        handles: [ItemTemplate.handles().item],
+        other: [ItemTemplate.other().item]
       });
     },
     editCalculation(state, { name }) {
@@ -279,8 +65,8 @@ export default {
       );
     },
     updateCalculation({ data, currentOrder, currentCalculation }) {
+      // Недописана функція, поки тільки для корпусу рахує суму
       const order = data[currentOrder].list[currentCalculation];
-      console.log(order);
       let total = 0;
       total += order.corps.reduce((acc, item) => {
         return acc + item.total;
@@ -310,21 +96,30 @@ export default {
       );
       data[currentOrder].list[currentCalculation][category] = [...list];
     },
+    deleteItem({ data, currentOrder }, { category, id, letter }) {
+      data[currentOrder].list.forEach(calc => {
+        if (calc.name === letter) {
+          if (calc[category].length === 1) {
+            calc[category].push({ ...ItemTemplate[category]().item });
+          }
+          calc[category] = calc[category].filter(item => item.id !== id);
+        }
+      });
+    },
     addSiblings(
       { data, currentOrder, currentCalculation },
       { category, parentId, newItem }
     ) {
-      const list = data[currentOrder].list[currentCalculation][category].map(
-        item => {
-          if (item.id === parentId) {
-            item.options.push({
-              ...newItem
-            });
-          }
-          return item;
+      data[currentOrder].list[currentCalculation][category] = data[
+        currentOrder
+      ].list[currentCalculation][category].map(item => {
+        if (item.id === parentId) {
+          item.options.push({
+            ...newItem
+          });
         }
-      );
-      data[currentOrder].list[currentCalculation][category] = [...list];
+        return item;
+      });
     },
     updateSiblings(
       { data, currentOrder, currentCalculation },
@@ -370,6 +165,9 @@ export default {
     },
     updateItem({ commit }, data) {
       commit("updateItem", data);
+    },
+    deleteItem({ commit }, data) {
+      commit("deleteItem", data);
     },
     addSiblings({ commit }, data) {
       commit("addSiblings", data);

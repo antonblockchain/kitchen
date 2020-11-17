@@ -62,6 +62,7 @@
           :item="item"
           :index="index"
           :category="'corps'"
+          :letter="name"
         />
         <CalcSibling
           v-for="(item, index) in facadesList.slice().reverse()"
@@ -70,6 +71,7 @@
           :item="item"
           :index="index"
           :category="'facades'"
+          :letter="name"
         />
       </ul>
 
