@@ -106,6 +106,32 @@ export default {
   other() {
     return this.loops();
   },
+  order() {
+    return {
+      order: CALC.generateID(),
+      user: "",
+      time: CALC.generateDate(),
+      list: [this.calculation()]
+    };
+  },
+  calculation() {
+    return {
+      name: "А",
+      total: 0,
+      discount: null,
+      corps: [this.corps().item],
+      facades: [this.facades().item],
+      loops: [this.loops().item],
+      boxes: [this.boxes().item],
+      mechanisms: [this.mechanisms().item],
+      tabletop: [this.tabletop().item],
+      tabletop_psc: [this.tabletop_psc().item],
+      wall_panel: [this.wall_panel().item],
+      wall_panel_psc: [this.wall_panel_psc().item],
+      handles: [this.handles().item],
+      other: [this.other().item]
+    };
+  },
   fakeData() {
     return {
       order: 894291,

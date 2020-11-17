@@ -14,7 +14,7 @@
           @click="openOrder(item.order)"
         >
           Заявка #<span>{{ formatId(item.order) }}</span> для
-          <span>{{ item.user }}</span> от
+          <span>{{ item.user ? item.user : "Без имени" }}</span> от
           {{ item.time }}
         </button>
       </li>
@@ -22,7 +22,8 @@
     <button class="lc__btn btn btn-block" type="button" @click="addOrder">
       <span class="icon icon-plus"></span>
     </button>
-    <pre style="font-size: 1rem">
+    {{ $store.getters.allState.currentOrder }}
+    <pre v-if="1" style="font-size: 1rem">
       <code>
         {{ orderList }}
       </code>
@@ -47,10 +48,11 @@ export default {
       }).to(id);
     },
     openOrder(id) {
-      console.log("openOrder", id);
+      this.$store.dispatch("setOrder", id);
+      this.$router.push("/page");
     },
     addOrder() {
-      console.log("add order");
+      this.$store.dispatch("addOrder");
     }
   }
 };

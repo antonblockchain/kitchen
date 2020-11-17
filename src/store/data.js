@@ -8,6 +8,12 @@ export default {
     data: [ItemTemplate.fakeData()]
   },
   mutations: {
+    addOrder(state) {
+      state.data.push(ItemTemplate.order());
+    },
+    setOrder(state, id) {
+      state.currentOrder = state.data.findIndex(item => item.order === id);
+    },
     copyCalculation({ data, currentOrder }, { name }) {
       if (data[currentOrder].list.length < 3) {
         let newItem = data[currentOrder].list.find(item => item.name === name);
@@ -23,20 +29,8 @@ export default {
     addCalculation(state) {
       let newLetter = CALC.uniqueLetter(state.data[state.currentOrder].list);
       state.data[state.currentOrder].list.push({
-        name: newLetter,
-        total: 0,
-        discount: null,
-        corps: [ItemTemplate.corps().item],
-        facades: [ItemTemplate.facades().item],
-        loops: [ItemTemplate.loops().item],
-        boxes: [ItemTemplate.boxes().item],
-        mechanisms: [ItemTemplate.mechanisms().item],
-        tabletop: [ItemTemplate.tabletop().item],
-        tabletop_psc: [ItemTemplate.tabletop_psc().item],
-        wall_panel: [ItemTemplate.wall_panel().item],
-        wall_panel_psc: [ItemTemplate.wall_panel_psc().item],
-        handles: [ItemTemplate.handles().item],
-        other: [ItemTemplate.other().item]
+        ...ItemTemplate.calculation(),
+        name: newLetter
       });
     },
     editCalculation(state, { name }) {
@@ -145,6 +139,12 @@ export default {
     }
   },
   actions: {
+    addOrder({ commit }) {
+      commit("addOrder");
+    },
+    setOrder({ commit }, data) {
+      commit("setOrder", data);
+    },
     addCalculation({ commit }) {
       commit("addCalculation");
     },
@@ -177,6 +177,9 @@ export default {
     }
   },
   getters: {
+    allState: state => {
+      return state;
+    },
     orderList: state => {
       return state.data;
     },

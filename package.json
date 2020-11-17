@@ -12,6 +12,7 @@
   "dependencies": {
     "core-js": "^3.6.5",
     "firebase": "^8.0.1",
+    "moment": "^2.29.1",
     "vue": "^2.6.11",
     "vue-input-autowidth": "^1.0.10",
     "vue-input-only-number": "^1.1.0",

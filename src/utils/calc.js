@@ -1,4 +1,5 @@
 import ItemTemplate from "@/utils/ItemTemplate";
+import moment from "moment";
 
 export default {
   fixNumber(number) {
@@ -44,6 +45,9 @@ export default {
   },
   generateID() {
     return Math.floor(Math.random() * 899999 + 100000);
+  },
+  generateDate() {
+    return moment().format("DD.MM.YYYY");
   },
   uniqueLetter(arr) {
     let str = "АБВ";

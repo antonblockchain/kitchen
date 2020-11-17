@@ -52,8 +52,6 @@ export default {
   },
   methods: {
     async submitHandler() {
-      // this.isSend = true;
-
       const formData = {
         email: this.email,
         password: this.password
