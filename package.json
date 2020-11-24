@@ -10,6 +10,7 @@
     "deploy": "yarn run build && yarn run firebase-deploy"
   },
   "dependencies": {
+    "axios": "^0.21.0",
     "core-js": "^3.6.5",
     "firebase": "^8.0.1",
     "moment": "^2.29.1",

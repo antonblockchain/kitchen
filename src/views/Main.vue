@@ -22,9 +22,9 @@
     <button class="lc__btn btn btn-block" type="button" @click="addOrder">
       <span class="icon icon-plus"></span>
     </button>
-    {{ $store.getters.allState.currentOrder }}
-    <pre v-if="1" style="font-size: 1rem">
+    <pre v-if="0" style="font-size: 1rem">
       <code>
+        {{ $store.getters.allState.currentOrder }}
         {{ orderList }}
       </code>
     </pre>

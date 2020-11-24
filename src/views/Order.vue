@@ -93,6 +93,13 @@
           ВЕРНУТЬСЯ К ЗАЯВКЕ
         </a>
       </div>
+      <pre v-if="0" style="text-align: left">
+        <small>
+          <code style="font-size: 1.1rem">
+            {{ dataInfo }}
+          </code>
+        </small>
+      </pre>
 
       <div class="order">
         <div class="order__title">1. Личные данные</div>
@@ -228,8 +235,41 @@
 </template>
 
 <script>
+// import axios from "axios";
+
 export default {
-  name: "Order"
+  name: "Order",
+  data() {
+    return {
+      dataInfo: "-"
+    };
+  },
+  mounted() {
+    // const id = "1DeEdfoquoLnBIczmX_6wg7bwwtFeQOPDHO-BMtAVDtg";
+    // axios
+    //   .get(
+    //     `https://spreadsheets.google.com/feeds/cells/${id}/1/public/full?alt=json`
+    //   )
+    //   .then(res => {
+    //     const { data } = res;
+    //     const newArr = [];
+    //     console.log(data.feed.entry);
+    //     data.feed.entry.splice(3).forEach((item, index) => {
+    //       let value = item["gs$cell"]["inputValue"];
+    //       if (index % 3 === 0) {
+    //         newArr.push({ name: value });
+    //       } else if (index % 2 === 0) {
+    //         newArr[newArr.length - 1].type = value;
+    //       } else {
+    //         newArr[newArr.length - 1].price = value;
+    //       }
+    //       console.log(item);
+    //     });
+    //     console.log(newArr);
+    //     this.dataInfo = newArr;
+    //   })
+    //   .catch(e => console.log(e));
+  }
 };
 </script>
 

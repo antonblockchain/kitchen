@@ -39,6 +39,7 @@ export default {
         total: 0,
         color: "",
         square: 0,
+        prepay: 0,
         options: []
       },
       sibling: {
@@ -75,9 +76,9 @@ export default {
     return {
       item: {
         id: CALC.generateID(),
-        name: "",
-        count: "",
-        color: "",
+        name: "name +333",
+        count: 20,
+        color: "Black",
         price: null
       }
     };
@@ -111,7 +112,27 @@ export default {
       order: CALC.generateID(),
       user: "",
       time: CALC.generateDate(),
-      list: [this.calculation()]
+      list: [this.calculation()],
+      shopper: this.shopper()
+    };
+  },
+  shopper() {
+    return {
+      shopper: {
+        firstName: "",
+        lastName: "",
+        middleName: "",
+        email: "",
+        number: "",
+        address: {
+          city: "",
+          flat: "",
+          entrance: "",
+          floor: ""
+        },
+        file: "",
+        pay: ""
+      }
     };
   },
   calculation() {
@@ -141,7 +162,7 @@ export default {
         {
           name: "А",
           total: 162516,
-          discount: null,
+          discount: 10,
           corps: [
             {
               id: 111111,

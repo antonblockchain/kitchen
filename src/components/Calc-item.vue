@@ -132,17 +132,8 @@ export default {
       isOpenContent: true,
       isOpenSettings: !false,
       isOpenDetails: false,
-      name: this.item.name,
-      discount: this.item.discount
+      name: this.item.name
     };
-  },
-  watch: {
-    // discount(value) {
-    //   const num = parseInt(value);
-    //   if (num > 100) {
-    //     this.discount = 100;
-    //   }
-    // }
   },
   computed: {
     finalPrice() {
@@ -156,13 +147,15 @@ export default {
     },
     total() {
       return this.item.total;
+    },
+    discount: {
+      get() {
+        return this.item.discount;
+      },
+      set(val) {
+        this.updateDiscount(val);
+      }
     }
-    // discount() {
-    //   return this.item.discount;
-    // }
-    // currentItem() {
-    //   return this.$store.getters.calculationList[this.index];
-    // }
   },
   methods: {
     toggleContent() {
@@ -188,6 +181,12 @@ export default {
     },
     deleteCalculation() {
       this.$store.dispatch("deleteCalculation", { name: this.name });
+    },
+    updateDiscount(val) {
+      this.$store.dispatch("updateCalculationDiscount", {
+        discount: val,
+        currentCalc: this.$store.getters.currentNumberCalculation
+      });
     }
   }
 };

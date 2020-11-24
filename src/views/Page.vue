@@ -8,8 +8,28 @@
               ПРОСЧЕТ <span>{{ currentCalculation.name }}</span>
             </b>
           </div>
+          {{ discount }} ==
           <div class="page__header_info">
-            Заявка #<span>{{ order }}</span> Для
+            Заявка #{{ formatOrder
+            }}<span
+              >-
+              <label>
+                <input
+                  type="text"
+                  class="page__header_name"
+                  v-autowidth="{
+                    maxWidth: '20rem',
+                    minWidth: '3.6rem',
+                    comfortZone: 0
+                  }"
+                  v-model="discount"
+                  placeholder="0"
+                  v-mask="'##'"
+                  v-int
+                />
+              </label>
+            </span>
+            Для
             <label>
               <input
                 type="text"
@@ -75,7 +95,8 @@
         >
           <small>
             <code style="font-size: 1.1rem">
-<!--              {{ loopsList }}-->
+              {{ currentOrder }}
+              {{ currentCalculation }}
             </code>
           </small>
         </pre>
@@ -87,6 +108,18 @@
             :item="calc"
           />
         </div>
+        <pre
+          v-if="1"
+          style="line-height: 1;font-size: 0;position: fixed;right: 0;top: 30%;overflow: auto;
+          background: rgba(255, 255, 255, 0.95);padding: 1rem 2rem;width: 39rem;z-index: 100;
+          bottom: 8rem;"
+        >
+          <small>
+            <code style="font-size: 1.1rem">
+              {{ currentCalculation }}
+            </code>
+          </small>
+        </pre>
 
         <button
           v-if="calculationList.length < 3"
@@ -120,7 +153,7 @@ export default {
   components: { Other, Corps, Facades, CalcItem },
   data() {
     return {
-      order: null,
+      order: 0,
       user: null,
       time: null
     };
@@ -143,15 +176,39 @@ export default {
     },
     currentCalculation() {
       return this.$store.getters.currentCalculation;
+    },
+    formatOrder() {
+      return wNumb({
+        thousand: "-"
+      }).to(this.order);
+    },
+    discount: {
+      get() {
+        return this.currentCalculation.discount;
+      },
+      set(val) {
+        this.updateDiscount(val);
+      }
+    }
+    // order() {
+    //   return this.currentOrder.order;
+    // },
+    // user() {
+    //   return this.currentOrder.user;
+    // },
+    // time() {
+    //   return this.currentOrder.time;
+    // }
+  },
+  watch: {
+    user() {
+      this.updateName();
     }
   },
   created() {
     this.$store.dispatch("fetchOptions");
-
-    const { order, user, time } = this.$store.getters.currentOrder;
-    this.order = wNumb({
-      thousand: "-"
-    }).to(order);
+    const { order, user, time } = this.currentOrder;
+    this.order = order;
     this.user = user;
     this.time = time;
   },
@@ -162,6 +219,24 @@ export default {
     },
     addCalculation() {
       this.$store.dispatch("addCalculation");
+    },
+    // updateInfo() {
+    //   const { order, user, time } = this.currentOrder;
+    //   this.order = order;
+    //   this.user = user;
+    //   this.time = time;
+    // },
+    updateName() {
+      this.$store.dispatch("updateOrderName", {
+        order: this.order,
+        user: this.user
+      });
+    },
+    updateDiscount(val) {
+      this.$store.dispatch("updateCalculationDiscount", {
+        discount: val,
+        currentCalc: this.$store.getters.currentNumberCalculation
+      });
     }
   }
 };

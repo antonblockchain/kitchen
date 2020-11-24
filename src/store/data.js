@@ -5,9 +5,22 @@ export default {
   state: {
     currentOrder: 0,
     currentCalculation: 0,
+    user: {
+      name: "Ткаченко Владислав",
+      position: "Менеджер"
+    },
     data: [ItemTemplate.fakeData()]
   },
   mutations: {
+    updateOrderName(state, { order, user }) {
+      state.data.some(item => {
+        const isCurrent = item.order === order;
+        if (isCurrent) {
+          item.user = user;
+        }
+        return isCurrent;
+      });
+    },
     addOrder(state) {
       state.data.push(ItemTemplate.order());
     },
@@ -66,6 +79,13 @@ export default {
         return acc + item.total;
       }, 0);
       order.total = total;
+    },
+    updateCalculationDiscount(
+      { data, currentOrder },
+      { discount, currentCalc }
+    ) {
+      console.log(discount, currentCalc);
+      data[currentOrder].list[currentCalc].discount = +discount;
     },
     addItem({ data, currentOrder, currentCalculation }, { category, newItem }) {
       data[currentOrder].list[currentCalculation][category] = [
@@ -139,6 +159,9 @@ export default {
     }
   },
   actions: {
+    updateOrderName({ commit }, data) {
+      commit("updateOrderName", data);
+    },
     addOrder({ commit }) {
       commit("addOrder");
     },
@@ -159,6 +182,9 @@ export default {
     },
     updateCalculation({ commit }) {
       commit("updateCalculation");
+    },
+    updateCalculationDiscount({ commit }, data) {
+      commit("updateCalculationDiscount", data);
     },
     addItem({ commit }, data) {
       commit("addItem", data);
@@ -191,6 +217,9 @@ export default {
     },
     currentCalculation: state => {
       return state.data[state.currentOrder].list[state.currentCalculation];
+    },
+    currentNumberCalculation: state => {
+      return state.currentCalculation;
     }
   }
 };

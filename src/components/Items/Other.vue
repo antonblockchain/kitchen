@@ -27,12 +27,23 @@
         placeholder=""
       />
     </label>
-    <label class="page__label page__label-count">
+    <label v-if="showCount" class="page__label page__label-count">
       <span class="page__text">Кол-во</span>
       <input
         type="text"
         class="page__input"
-        v-model.trim="itemCount"
+        v-model.trim.number="itemCount"
+        v-mask="'#########'"
+        placeholder=""
+      />
+    </label>
+    <label v-if="showPrice" class="page__label page__label-count">
+      <span class="page__text">Цена</span>
+      <input
+        type="text"
+        class="page__input"
+        v-model.trim.number="itemPrice"
+        v-mask="'#########'"
         placeholder=""
       />
     </label>
@@ -64,21 +75,46 @@ export default {
     return {
       itemName: this.item.name,
       itemCount: this.item.count,
-      itemColor: this.item.color
+      itemColor: this.item.color,
+      itemPrice: this.item.price
     };
   },
   computed: {
     showColor() {
-      return ["loops", "boxes", "mechanisms"].indexOf(this.category) === -1;
+      return (
+        ["tabletop", "tabletop_psc", "wall_panel", "wall_panel_psc"].indexOf(
+          this.category
+        ) !== -1
+      );
+    },
+    showCount() {
+      return (
+        [
+          "loops",
+          "boxes",
+          "mechanisms",
+          "tabletop",
+          "wall_panel",
+          "handles",
+          "other"
+        ].indexOf(this.category) !== -1
+      );
+    },
+    showPrice() {
+      return (
+        ["tabletop_psc", "wall_panel_psc", "handles", "other"].indexOf(
+          this.category
+        ) !== -1
+      );
+    },
+    showSelect() {
+      return ["handles", "other"].indexOf(this.category) === -1;
     },
     currentIndex() {
       return this.index !== 0 ? this.index + 1 : "";
     },
     options() {
       return this.$store.getters.getOptions[this.category];
-    },
-    showSelect() {
-      return ["other"].indexOf(this.category) === -1;
     }
   },
   watch: {
@@ -89,6 +125,9 @@ export default {
       this.updateItem();
     },
     itemColor() {
+      this.updateItem();
+    },
+    itemPrice() {
       this.updateItem();
     }
   },
@@ -102,7 +141,9 @@ export default {
     updateItem() {
       const newData = {
         name: this.itemName,
-        count: this.itemCount
+        count: this.itemCount,
+        color: this.itemColor,
+        price: this.itemPrice
       };
       this.$store.dispatch("updateItem", {
         category: this.category,

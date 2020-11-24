@@ -7,11 +7,9 @@ export default {
       boxes: [],
       mechanisms: [],
       tabletop: [],
-      "tabletop-psc": [],
-      "wall-panel": [],
-      "wall-panel-psc": [],
-      handles: [],
-      other: []
+      tabletop_psc: [],
+      wall_panel: [],
+      wall_panel_psc: []
     }
   },
   mutations: {
@@ -38,8 +36,6 @@ export default {
         commit("setOptionsByName", { name: "tabletop_psc", data });
         commit("setOptionsByName", { name: "wall_panel", data });
         commit("setOptionsByName", { name: "wall_panel_psc", data });
-        commit("setOptionsByName", { name: "handles", data });
-        commit("setOptionsByName", { name: "other", data });
       } catch (e) {
         commit("setError", e);
         console.log(e);
