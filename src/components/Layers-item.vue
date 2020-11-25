@@ -1,7 +1,7 @@
 <template>
   <!--  <li v-if="square > 0">-->
-  <li>
-    <!--  <li v-if="item.total > 0">-->
+  <!--  <li>-->
+  <li v-if="item.total > 0">
     <div class="layers__item calc__row">
       <div class="calc__name">
         <b>{{ title }} {{ currentIndex }}:</b> {{ name }}, {{ color }}

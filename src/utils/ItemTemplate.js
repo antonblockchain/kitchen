@@ -76,11 +76,11 @@ export default {
     return {
       item: {
         id: CALC.generateID(),
-        name: "name +333",
-        count: 20,
+        name: "b",
+        count: null,
         color: "Black",
-        price: 100,
-        total: 2
+        price: null,
+        total: 0
       }
     };
   },
@@ -234,9 +234,11 @@ export default {
           ],
           facades: [
             {
-              id: 6901,
+              id: 683692,
               name: "",
               color: "",
+              total: 0,
+              prepay: 0,
               square: 0,
               options: []
             }

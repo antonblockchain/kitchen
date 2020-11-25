@@ -116,6 +116,12 @@ export default {
     },
     options() {
       return this.$store.getters.getOptions[this.category];
+    },
+    total() {
+      if (["tabletop_psc", "wall_panel_psc"].indexOf(this.category) !== -1) {
+        return this.itemPrice;
+      }
+      return this.itemPrice * this.itemCount;
     }
   },
   watch: {
@@ -140,17 +146,29 @@ export default {
       });
     },
     updateItem() {
+      const options = this.$store.getters.getOptions[this.category];
+      if (options) {
+        options.some(item => {
+          if (item.name === this.itemName && !this.showPrice) {
+            this.itemPrice = item.price;
+            return true;
+          }
+        });
+      }
+
       const newData = {
         name: this.itemName,
         count: this.itemCount,
         color: this.itemColor,
-        price: this.itemPrice
+        price: this.itemPrice,
+        total: this.total
       };
       this.$store.dispatch("updateItem", {
         category: this.category,
         id: this.item.id,
         newData
       });
+      this.$store.dispatch("updateCalculation");
     }
   }
 };

@@ -1,6 +1,6 @@
 <template>
-  <li class="calc__row">
-    <!--  <li v-if="item.total > 0" class="calc__row">-->
+  <!--  <li class="calc__row">-->
+  <li v-if="item.total > 0" class="calc__row">
     <div class="calc__name">
       <b>{{ title }} {{ currentIndex }}:</b>
       {{ name }}, {{ color }}

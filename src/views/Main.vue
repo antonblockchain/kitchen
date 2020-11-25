@@ -13,9 +13,8 @@
           type="button"
           @click="openOrder(item.order)"
         >
-          Заявка #{{ formatId(item.order)
-          }}<span>-{{ item.discount }}</span> для
-          <span>{{ item.user ? item.user : "Без имени" }}</span> от
+          Заявка #<span>{{ formatId(item.order) }}</span> для
+          <span>{{ formatName(item.user) }}</span> от
           {{ item.time }}
         </button>
       </li>
@@ -47,6 +46,9 @@ export default {
       return wNumb({
         thousand: "-"
       }).to(id);
+    },
+    formatName(name) {
+      return name ? name : "Без имени";
     },
     openOrder(id) {
       this.$store.dispatch("setOrder", id);

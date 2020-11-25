@@ -72,19 +72,20 @@ export default {
       );
     },
     updateCalculation({ data, currentOrder, currentCalculation }) {
-      // Недописана функція, поки тільки для корпусу рахує суму
       const order = data[currentOrder].list[currentCalculation];
       let total = 0;
-      total += order.corps.reduce((acc, item) => {
-        return acc + item.total;
+      const categoryList = ItemTemplate.listCategory();
+
+      total += categoryList.reduce((acc, category) => {
+        return acc + order[category].reduce((acc, item) => acc + item.total, 0);
       }, 0);
+
       order.total = total;
     },
     updateCalculationDiscount(
       { data, currentOrder },
       { discount, currentCalc }
     ) {
-      console.log(discount, currentCalc);
       data[currentOrder].list[currentCalc].discount = +discount;
     },
     addItem({ data, currentOrder, currentCalculation }, { category, newItem }) {

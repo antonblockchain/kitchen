@@ -1,5 +1,5 @@
 <template>
-  <div class="calc__item">
+  <div v-show="!isOpen" class="calc__item">
     <div class="calc__head">
       <div class="calc__head_title">
         ПРОСЧЕТ <span>{{ name }}</span>
@@ -117,7 +117,7 @@ export default {
   },
   data() {
     return {
-      isOpenContent: true,
+      isOpenContent: !false,
       isOpenSettings: !false,
       isOpenDetails: false,
       name: this.item.name
@@ -143,6 +143,10 @@ export default {
     },
     categoryName() {
       return ItemTemplate.namesCategory();
+    },
+    isOpen() {
+      return false;
+      // return this.$store.getters.currentNumberCalculation === this.index;
     }
   },
   methods: {
