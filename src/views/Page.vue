@@ -8,7 +8,6 @@
               ПРОСЧЕТ <span>{{ currentCalculation.name }}</span>
             </b>
           </div>
-          {{ discount }} ==
           <div class="page__header_info">
             Заявка #{{ formatOrder
             }}<span
@@ -109,8 +108,8 @@
           />
         </div>
         <pre
-          v-if="1"
-          style="line-height: 1;font-size: 0;position: fixed;right: 0;top: 30%;overflow: auto;
+          v-if="0"
+          style="line-height: 1;font-size: 0;position: fixed;right: 0;top: 35%;overflow: auto;
           background: rgba(255, 255, 255, 0.95);padding: 1rem 2rem;width: 39rem;z-index: 100;
           bottom: 8rem;"
         >

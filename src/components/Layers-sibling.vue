@@ -1,7 +1,7 @@
 <template>
   <li v-if="square > 0" class="calc__row">
     <div class="calc__name">
-      <b>Деталь d{{ indexNumber }}:</b> {{ name }}, {{ color }},
+      <b>Деталь {{ indexNumber }}:</b> {{ name }}, {{ color }},
       {{ typeNames[type - 1] }} {{ article }}
     </div>
     <div class="calc__size">{{ square }} м<sup>2</sup></div>

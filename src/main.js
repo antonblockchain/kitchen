@@ -10,6 +10,7 @@ import VueTheMask from "vue-the-mask";
 import vSelect from "vue-select";
 import VueInputAutoWidth from "vue-input-autowidth";
 import onlyInt from "vue-input-only-number";
+import { Plugin } from "vue-fragment";
 
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -43,6 +44,7 @@ firebase.auth().onAuthStateChanged(() => {
     Vue.use(VueTheMask);
     Vue.use(VueInputAutoWidth);
     Vue.use(onlyInt);
+    Vue.use(Plugin);
 
     vSelect.props.components.default = () => ({
       OpenIndicator: {

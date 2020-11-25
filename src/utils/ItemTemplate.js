@@ -79,7 +79,8 @@ export default {
         name: "name +333",
         count: 20,
         color: "Black",
-        price: null
+        price: 100,
+        total: 2
       }
     };
   },

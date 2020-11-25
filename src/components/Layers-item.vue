@@ -1,13 +1,16 @@
 <template>
-  <li v-if="square > 0">
+  <!--  <li v-if="square > 0">-->
+  <li>
+    <!--  <li v-if="item.total > 0">-->
     <div class="layers__item calc__row">
       <div class="calc__name">
         <b>{{ title }} {{ currentIndex }}:</b> {{ name }}, {{ color }}
       </div>
-      <div class="calc__size">{{ square }} м<sup>2</sup></div>
+      <div v-if="square > 0" class="calc__size">{{ square }} м<sup>2</sup></div>
+      <div v-if="count > 0" class="calc__size">{{ count }} шт.</div>
       <div class="calc__price">{{ price }} ₽</div>
     </div>
-    <ul>
+    <ul v-if="item.options">
       <LayersSibling
         v-for="(layer, index) in item.options"
         :key="layer.id"
@@ -40,6 +43,9 @@ export default {
     square() {
       return this.item.square;
     },
+    count() {
+      return this.item.count;
+    },
     name() {
       return this.item.name;
     },
@@ -50,7 +56,7 @@ export default {
       return wNumb({
         decimals: 0,
         thousand: " "
-      }).to(this.item.total);
+      }).to(this.item.total || 0);
     }
   }
 };

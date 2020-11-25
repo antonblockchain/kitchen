@@ -13,7 +13,8 @@
           type="button"
           @click="openOrder(item.order)"
         >
-          Заявка #<span>{{ formatId(item.order) }}</span> для
+          Заявка #{{ formatId(item.order)
+          }}<span>-{{ item.discount }}</span> для
           <span>{{ item.user ? item.user : "Без имени" }}</span> от
           {{ item.time }}
         </button>

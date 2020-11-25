@@ -76,7 +76,8 @@ export default {
       itemName: this.item.name,
       itemCount: this.item.count,
       itemColor: this.item.color,
-      itemPrice: this.item.price
+      itemPrice: this.item.price,
+      itemTotal: this.item.total
     };
   },
   computed: {

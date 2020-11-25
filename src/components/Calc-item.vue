@@ -54,26 +54,19 @@
     </div>
 
     <div class="calc__content" v-if="isOpenContent">
-      <ul class="calc__list">
-        <CalcSibling
-          v-for="(item, index) in corpsList.slice().reverse()"
-          :key="item.id"
-          :title="'Материал корпуса'"
-          :item="item"
-          :index="index"
-          :category="'corps'"
-          :letter="name"
-        />
-        <CalcSibling
-          v-for="(item, index) in facadesList.slice().reverse()"
-          :key="item.id"
-          :title="'Комплект фасадов'"
-          :item="item"
-          :index="index"
-          :category="'facades'"
-          :letter="name"
-        />
-      </ul>
+      <div class="calc__list">
+        <ul v-for="cat in categoryList" :key="cat">
+          <CalcSibling
+            v-for="(item, index) in item[cat].slice().reverse()"
+            :key="item.id"
+            :title="categoryName[cat]"
+            :item="item"
+            :index="index"
+            :category="cat"
+            :letter="name"
+          />
+        </ul>
+      </div>
 
       <div class="calc__total">
         <div class="calc__total_title">ИТОГО:</div>
@@ -88,24 +81,18 @@
         <button class="layers__top" type="button" @click="toggleDetails">
           <span class="icon icon-layers"></span>
         </button>
-        <ul v-if="isOpenDetails" class="layers__list">
-          <LayersItem
-            v-for="(item, index) in corpsList.slice().reverse()"
-            :key="item.id"
-            :title="'Материал корпуса'"
-            :item="item"
-            :index="index"
-            :category="'corps'"
-          />
-          <LayersItem
-            v-for="(item, index) in facadesList.slice().reverse()"
-            :key="item.id"
-            :title="'Комплект фасадов'"
-            :item="item"
-            :index="index"
-            :category="'facades'"
-          />
-        </ul>
+        <div v-if="isOpenDetails" class="layers__list">
+          <ul v-for="cat in categoryList" :key="cat">
+            <LayersItem
+              v-for="(item, index) in item[cat].slice().reverse()"
+              :key="item.id"
+              :title="categoryName[cat]"
+              :item="item"
+              :index="index"
+              :category="cat"
+            />
+          </ul>
+        </div>
       </div>
 
       <button class="calc__toggle" type="button" @click="toggleContent">
@@ -119,6 +106,7 @@
 import wNumb from "wnumb";
 import CalcSibling from "@/components/Calc-sibling";
 import LayersItem from "@/components/Layers-item";
+import ItemTemplate from "@/utils/ItemTemplate";
 
 export default {
   name: "Calc-item",
@@ -139,12 +127,6 @@ export default {
     finalPrice() {
       return this.formatPrice((this.total * (100 - this.discount)) / 100);
     },
-    corpsList() {
-      return this.item.corps;
-    },
-    facadesList() {
-      return this.item.facades;
-    },
     total() {
       return this.item.total;
     },
@@ -155,6 +137,12 @@ export default {
       set(val) {
         this.updateDiscount(val);
       }
+    },
+    categoryList() {
+      return ItemTemplate.listCategory();
+    },
+    categoryName() {
+      return ItemTemplate.namesCategory();
     }
   },
   methods: {
