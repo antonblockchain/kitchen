@@ -1,5 +1,5 @@
 <template>
-  <div v-show="!isOpen" class="calc__item">
+  <div v-show="!isShow" class="calc__item">
     <div class="calc__head">
       <div class="calc__head_title">
         ПРОСЧЕТ <span>{{ name }}</span>
@@ -33,7 +33,7 @@
                 comfortZone: 0
               }"
               v-model="discount"
-              v-mask="'##'"
+              v-mask="'###'"
               placeholder="%"
               v-int
             />
@@ -64,6 +64,7 @@
             :index="index"
             :category="cat"
             :letter="name"
+            :isOrder="true"
           />
         </ul>
       </div>
@@ -71,8 +72,8 @@
       <div class="calc__total">
         <div class="calc__total_title">ИТОГО:</div>
         <div v-if="discount > 0" class="calc__total_price">
-          {{ finalPrice }} ₽<sup>-{{ discount }}%</sup>
-          <del>{{ formatPrice(total) }} ₽</del>
+          {{ formatPrice(total) }} ₽<sup>-{{ discount }}%</sup>
+          <del>{{ finalPrice }} ₽</del>
         </div>
         <div v-else class="calc__total_price">{{ total }} ₽</div>
       </div>
@@ -125,7 +126,7 @@ export default {
   },
   computed: {
     finalPrice() {
-      return this.formatPrice((this.total * (100 - this.discount)) / 100);
+      return this.formatPrice((this.total * (100 + this.discount)) / 100);
     },
     total() {
       return this.item.total;
@@ -135,7 +136,7 @@ export default {
         return this.item.discount;
       },
       set(val) {
-        this.updateDiscount(val);
+        this.updateDiscount(Math.min(Math.max(val, 0), 100));
       }
     },
     categoryList() {
@@ -144,7 +145,7 @@ export default {
     categoryName() {
       return ItemTemplate.namesCategory();
     },
-    isOpen() {
+    isShow() {
       return false;
       // return this.$store.getters.currentNumberCalculation === this.index;
     }
@@ -175,9 +176,13 @@ export default {
       this.$store.dispatch("deleteCalculation", { name: this.name });
     },
     updateDiscount(val) {
+      const index = this.$store.getters.calculationList.findIndex(item => {
+        return item.name === this.item.name;
+      });
+
       this.$store.dispatch("updateCalculationDiscount", {
         discount: val,
-        currentCalc: this.$store.getters.currentNumberCalculation
+        currentCalc: index
       });
     }
   }

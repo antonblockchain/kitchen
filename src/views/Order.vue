@@ -3,10 +3,45 @@
     <div class="page__left page__left-dark">
       <div class="page__header page__header-inside">
         <div class="page__header_title">
-          ЭТО<b>ПРОСЧЕТ <span>В</span></b>
+          ЭТО<b
+            >ПРОСЧЕТ <span>{{ name }}</span></b
+          >
         </div>
         <div class="page__header_info">
-          Заявка #231133-10 Для <span>Шишншиловна А.З.</span> от 27.07.2020
+          Заявка #{{ formatOrder
+          }}<span
+            >-
+            <label>
+              <input
+                type="text"
+                class="page__header_name"
+                v-autowidth="{
+                  maxWidth: '20rem',
+                  minWidth: '3.6rem',
+                  comfortZone: 0
+                }"
+                v-model="discount"
+                placeholder="0"
+                v-mask="'##'"
+                v-int
+              />
+            </label>
+          </span>
+          Для
+          <label>
+            <input
+              type="text"
+              class="page__header_name"
+              v-autowidth="{
+                maxWidth: '20rem',
+                minWidth: '3.6rem',
+                comfortZone: 0
+              }"
+              v-model="user"
+              placeholder="ФИО"
+            />
+          </label>
+          от {{ time }}
         </div>
       </div>
 
@@ -16,8 +51,23 @@
         </div>
 
         <div class="calc__content">
+          <div class="calc__list">
+            <ul v-for="cat in categoryList" :key="cat">
+              <CalcSibling
+                v-for="(item, index) in currentItem[cat].slice().reverse()"
+                :key="item.id"
+                :title="categoryName[cat]"
+                :item="item"
+                :index="index"
+                :category="cat"
+                :letter="name"
+                :isOrder="false"
+              />
+            </ul>
+          </div>
+
+          ===
           <ul class="calc__list">
-            {% for i in range(0, 7) -%}
             <li class="calc__row">
               <div class="calc__name">
                 <b>Мтериал корпуса:</b> Базовый, Серый
@@ -26,12 +76,16 @@
               <div class="calc__interest color-red">100%</div>
               <div class="calc__price">34 000 ₽</div>
             </li>
-            {%- endfor %}
           </ul>
+          ====
 
           <div class="calc__total calc__total-big">
             <div class="calc__total_title">ИТОГО:</div>
-            <div class="calc__total_price">853 000 ₽</div>
+            <div v-if="discount > 0" class="calc__total_price">
+              {{ formatPrice(total) }} ₽<sup>-{{ discount }}%</sup>
+              <del>{{ finalPrice }} ₽</del>
+            </div>
+            <div v-else class="calc__total_price">{{ total }} ₽</div>
           </div>
           <div class="calc__row">
             <div class="calc__name color-red">Предоплата</div>
@@ -47,45 +101,24 @@
       </div>
 
       <div class="layers">
-        <div class="layers__top">
-          <div class="icon icon-layers"></div>
+        <button class="layers__top" type="button" @click="toggleDetails">
+          <span class="icon icon-layers"></span>
+        </button>
+        <div v-if="isOpenDetails" class="layers__list">
+          <ul v-for="cat in categoryList" :key="cat">
+            <LayersItem
+              v-for="(item, index) in currentItem[cat].slice().reverse()"
+              :key="item.id"
+              :title="categoryName[cat]"
+              :item="item"
+              :index="index"
+              :category="cat"
+            />
+          </ul>
         </div>
-        <ul class="layers__list">
-          <li>
-            <div class="layers__item calc__row">
-              <div class="calc__name">
-                <b>Комплект фасадов:</b> Базовый, Серый
-              </div>
-              <div class="calc__size">20 м<sup>2</sup></div>
-              <div class="calc__price">34 000 ₽</div>
-            </div>
-            <ul>
-              <li class="calc__row">
-                <div class="calc__name">
-                  <b>Деталь 1:</b> Эмаль, Синий, ИР Низ, 102221
-                </div>
-                <div class="calc__size">3.7 м<sup>2</sup></div>
-                <div class="calc__price">3 000 ₽</div>
-              </li>
-              <li class="calc__row">
-                <div class="calc__name">
-                  <b>Деталь 1:</b> Эмаль, Синий, ИР Низ, 102221
-                </div>
-                <div class="calc__size">3.7 м<sup>2</sup></div>
-                <div class="calc__price">3 000 ₽</div>
-              </li>
-              <li class="calc__row">
-                <div class="calc__name">
-                  <b>Деталь 1:</b> Эмаль, Синий, ИР Низ, 102221
-                </div>
-                <div class="calc__size">3.7 м<sup>2</sup></div>
-                <div class="calc__price">3 000 ₽</div>
-              </li>
-            </ul>
-          </li>
-        </ul>
       </div>
     </div>
+
     <div class="page__left">
       <div class="page__header">
         <div class="page__header_title"><b>ОФОРМИТЬ ЗАКАЗ</b></div>
@@ -235,14 +268,76 @@
 </template>
 
 <script>
-// import axios from "axios";
+import wNumb from "wnumb";
+import CalcSibling from "@/components/Calc-sibling";
+import LayersItem from "@/components/Layers-item";
+import ItemTemplate from "@/utils/ItemTemplate";
 
 export default {
   name: "Order",
+  components: { LayersItem, CalcSibling },
   data() {
     return {
-      dataInfo: "-"
+      dataInfo: "-",
+      isOpenDetails: !false,
+      user: null
     };
+  },
+  computed: {
+    finalPrice() {
+      return this.formatPrice((this.total * (100 - this.discount)) / 100);
+    },
+    total() {
+      return this.currentItem.total;
+    },
+    categoryList() {
+      return ItemTemplate.listCategory();
+    },
+    categoryName() {
+      return ItemTemplate.namesCategory();
+    },
+    currentOrder() {
+      return this.$store.getters.currentOrder;
+    },
+    currentItem() {
+      return this.$store.getters.currentCalculation;
+    },
+    name() {
+      return this.currentOrder.name;
+    },
+    time() {
+      return this.currentOrder.time;
+    },
+    discount: {
+      get() {
+        return this.currentItem.discount;
+      },
+      set(val) {
+        this.updateDiscount(val);
+      }
+    },
+    formatOrder() {
+      return wNumb({
+        thousand: "-"
+      }).to(this.currentOrder.order);
+    }
+  },
+  methods: {
+    toggleDetails() {
+      this.isOpenDetails = !this.isOpenDetails;
+    },
+    updateDiscount(val) {
+      this.$store.dispatch("updateCalculationDiscount", {
+        discount: val,
+        currentCalc: this.$store.getters.currentNumberCalculation
+      });
+    },
+    formatPrice(number) {
+      return wNumb({
+        decimals: 0,
+        thousand: " "
+      }).to(number);
+    }
   },
   mounted() {
     // const id = "1DeEdfoquoLnBIczmX_6wg7bwwtFeQOPDHO-BMtAVDtg";

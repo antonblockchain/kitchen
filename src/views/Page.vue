@@ -4,9 +4,9 @@
       <div class="page__left">
         <div class="page__header">
           <div class="page__header_title">
-            ЭТО<b>
-              ПРОСЧЕТ <span>{{ currentCalculation.name }}</span>
-            </b>
+            ЭТО<b
+              >ПРОСЧЕТ <span>{{ currentCalculation.name }}</span></b
+            >
           </div>
           <div class="page__header_info">
             Заявка #{{ formatOrder
@@ -23,7 +23,7 @@
                   }"
                   v-model="discount"
                   placeholder="0"
-                  v-mask="'##'"
+                  v-mask="'###'"
                   v-int
                 />
               </label>
@@ -129,7 +129,12 @@
           <span class="icon icon-plus"></span>
         </button>
         <div class="calc__bottom">
-          <button class="calc__order btn" type="button">
+          <button
+            class="calc__order btn"
+            type="button"
+            :disabled="currentOrder.list.length > 1"
+            @click="goToOrder"
+          >
             ОФОРМИТЬ ДОГОВОР
           </button>
           <button class="btn" type="button">СФОРМИРОВАТЬ КП</button>
@@ -186,7 +191,7 @@ export default {
         return this.currentCalculation.discount;
       },
       set(val) {
-        this.updateDiscount(val);
+        this.updateDiscount(Math.min(Math.max(val, 0), 100));
       }
     }
     // order() {
@@ -236,6 +241,9 @@ export default {
         discount: val,
         currentCalc: this.$store.getters.currentNumberCalculation
       });
+    },
+    goToOrder() {
+      this.$router.push("/order");
     }
   }
 };

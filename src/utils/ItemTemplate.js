@@ -162,7 +162,8 @@ export default {
       list: [
         {
           name: "А",
-          total: 162516,
+          // total: 162516,
+          total: 100000,
           discount: 10,
           corps: [
             {

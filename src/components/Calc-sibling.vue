@@ -7,8 +7,33 @@
     </div>
     <div v-if="square > 0" class="calc__size">{{ square }} м<sup>2</sup></div>
     <div v-if="count > 0" class="calc__size">{{ count }} шт.</div>
+
+    <div class="calc__interest color-red">
+      <label>
+        <input
+          type="text"
+          class="page__header_name"
+          v-autowidth="{
+            maxWidth: '5rem',
+            minWidth: '0.6rem',
+            comfortZone: 0
+          }"
+          v-model="discount"
+          placeholder="0"
+          v-mask="'##'"
+          v-int
+        />
+      </label>
+      %
+    </div>
+
     <div class="calc__price">{{ price }} ₽</div>
-    <button class="calc__remove" type="button" @click="deleteItem">
+    <button
+      v-show="isOrder"
+      class="calc__remove"
+      type="button"
+      @click="deleteItem"
+    >
       <span class="icon icon-close"></span>
     </button>
   </li>
@@ -24,10 +49,13 @@ export default {
     item: Object,
     index: Number,
     category: String,
-    letter: String
+    letter: String,
+    isOrder: Boolean
   },
   data() {
-    return {};
+    return {
+      discount: 11
+    };
   },
   computed: {
     currentIndex() {
