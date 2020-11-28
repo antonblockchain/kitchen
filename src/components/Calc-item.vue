@@ -28,8 +28,8 @@
               type="text"
               class="calc__nav_link"
               v-autowidth="{
-                maxWidth: '20rem',
-                minWidth: '2rem',
+                maxWidth: '4rem',
+                minWidth: '2.5rem',
                 comfortZone: 0
               }"
               v-model="discount"
@@ -64,7 +64,7 @@
             :index="index"
             :category="cat"
             :letter="name"
-            :isOrder="true"
+            :isOrder="false"
           />
         </ul>
       </div>
@@ -72,10 +72,10 @@
       <div class="calc__total">
         <div class="calc__total_title">ИТОГО:</div>
         <div v-if="discount > 0" class="calc__total_price">
-          {{ formatPrice(total) }} ₽<sup>-{{ discount }}%</sup>
-          <del>{{ finalPrice }} ₽</del>
+          {{ finalPrice }} ₽<sup>-{{ discount }}%</sup>
+          <del>{{ formatPrice(total) }} ₽</del>
         </div>
-        <div v-else class="calc__total_price">{{ total }} ₽</div>
+        <div v-else class="calc__total_price">{{ formatPrice(total) }} ₽</div>
       </div>
 
       <div class="layers">
@@ -91,6 +91,7 @@
               :item="item"
               :index="index"
               :category="cat"
+              :isOrder="false"
             />
           </ul>
         </div>
@@ -126,10 +127,16 @@ export default {
   },
   computed: {
     finalPrice() {
-      return this.formatPrice((this.total * (100 + this.discount)) / 100);
+      return this.formatPrice(this.total * this.discountPer);
+    },
+    discountPer() {
+      return 1 - this.discount / 100;
+    },
+    extra() {
+      return 1 + this.$store.getters.currentOrder.extra / 100;
     },
     total() {
-      return this.item.total;
+      return this.item.total * this.extra;
     },
     discount: {
       get() {

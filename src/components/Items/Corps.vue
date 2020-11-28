@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="page__item" :class="{ 'page__item-black': isLast }">
+    <div class="page__item" :class="{ 'page__item-black': showParams }">
       <label class="page__label page__label-large">
         <!--        <span class="page__text">{{ id }}</span>-->
         <span class="page__text">Материал корпуса {{ currentIndex }}</span>
@@ -33,14 +33,18 @@
 
       <button
         class="page__btn btn"
-        :class="{ 'page__btn-black': isLast }"
+        :class="{ 'page__btn-black': showParams }"
         type="button"
         @click="toggleParams"
       >
         <span class="icon icon-cube"></span>
       </button>
       <button
-        class="page__btn page__btn-light btn"
+        class="page__btn btn"
+        :class="{
+          'page__btn-light': !showParams,
+          'page__btn-grey': showParams
+        }"
         type="button"
         @click="cloneItem"
         v-if="!isLast"

@@ -2,11 +2,7 @@
   <div class="page page-order">
     <div class="page__left page__left-dark">
       <div class="page__header page__header-inside">
-        <div class="page__header_title">
-          ЭТО<b
-            >ПРОСЧЕТ <span>{{ name }}</span></b
-          >
-        </div>
+        <div class="page__header_title">ЭТО<b>ПРОСЧЕТ</b></div>
         <div class="page__header_info">
           Заявка #{{ formatOrder
           }}<span
@@ -20,9 +16,9 @@
                   minWidth: '3.6rem',
                   comfortZone: 0
                 }"
-                v-model="discount"
+                v-model="extra"
                 placeholder="0"
-                v-mask="'##'"
+                v-mask="'###'"
                 v-int
               />
             </label>
@@ -47,7 +43,9 @@
 
       <div class="calc__item">
         <div class="calc__head">
-          <div class="calc__head_title">ПРОСЧЕТ <span>А</span></div>
+          <div class="calc__head_title">
+            ПРОСЧЕТ <span>{{ name }}</span>
+          </div>
         </div>
 
         <div class="calc__content">
@@ -61,41 +59,28 @@
                 :index="index"
                 :category="cat"
                 :letter="name"
-                :isOrder="false"
+                :isOrder="true"
               />
             </ul>
           </div>
 
-          ===
-          <ul class="calc__list">
-            <li class="calc__row">
-              <div class="calc__name">
-                <b>Мтериал корпуса:</b> Базовый, Серый
-              </div>
-              <div class="calc__size">20 м<sup>2</sup></div>
-              <div class="calc__interest color-red">100%</div>
-              <div class="calc__price">34 000 ₽</div>
-            </li>
-          </ul>
-          ====
-
           <div class="calc__total calc__total-big">
             <div class="calc__total_title">ИТОГО:</div>
-            <div v-if="discount > 0" class="calc__total_price">
-              {{ formatPrice(total) }} ₽<sup>-{{ discount }}%</sup>
-              <del>{{ finalPrice }} ₽</del>
-            </div>
-            <div v-else class="calc__total_price">{{ total }} ₽</div>
+            <!--            <div v-if="discount > 0" class="calc__total_price">-->
+            <!--              {{ formatPrice(total) }} ₽<sup>-{{ discount }}%</sup>-->
+            <!--              <del>{{ finalPrice }} ₽</del>-->
+            <!--            </div>-->
+            <div class="calc__total_price">{{ formatPrice(total) }} ₽</div>
           </div>
           <div class="calc__row">
             <div class="calc__name color-red">Предоплата</div>
-            <div class="calc__interest color-red">35%</div>
-            <div class="calc__price color-red">334 000 ₽</div>
+            <div class="calc__interest color-red">{{ prepayPercentages }}%</div>
+            <div class="calc__price color-red">{{ formatPrice(prepay) }} ₽</div>
           </div>
           <div class="calc__row">
             <div class="calc__name">Постоплата</div>
-            <div class="calc__interest">65%</div>
-            <div class="calc__price">519 000 ₽</div>
+            <div class="calc__interest">{{ 100 - prepayPercentages }}%</div>
+            <div class="calc__price">{{ formatPrice(total - prepay) }} ₽</div>
           </div>
         </div>
       </div>
@@ -113,6 +98,7 @@
               :item="item"
               :index="index"
               :category="cat"
+              :isOrder="true"
             />
           </ul>
         </div>
@@ -122,14 +108,19 @@
     <div class="page__left">
       <div class="page__header">
         <div class="page__header_title"><b>ОФОРМИТЬ ЗАКАЗ</b></div>
-        <a class="page__header_back" href="/#">
+        <router-link class="page__header_back" to="/page">
           ВЕРНУТЬСЯ К ЗАЯВКЕ
-        </a>
+        </router-link>
       </div>
-      <pre v-if="0" style="text-align: left">
+      <pre
+        v-if="1"
+        style="line-height: 1;font-size: 0;position: fixed;right: 0;top: 10%;overflow: auto;
+          background: rgba(255, 255, 255, 0.95);padding: 1rem 2rem;width: 40rem;z-index: 100;
+          bottom: 8rem;text-align: left"
+      >
         <small>
           <code style="font-size: 1.1rem">
-            {{ dataInfo }}
+            {{ currentItem }}
           </code>
         </small>
       </pre>
@@ -279,7 +270,7 @@ export default {
   data() {
     return {
       dataInfo: "-",
-      isOpenDetails: !false,
+      isOpenDetails: false,
       user: null
     };
   },
@@ -288,7 +279,13 @@ export default {
       return this.formatPrice((this.total * (100 - this.discount)) / 100);
     },
     total() {
-      return this.currentItem.total;
+      return this.currentItem.total * this.coefficient;
+    },
+    coefficient() {
+      return (
+        (1 + this.$store.getters.currentOrder.extra / 100) *
+        (1 - this.discount / 100)
+      );
     },
     categoryList() {
       return ItemTemplate.listCategory();
@@ -303,34 +300,51 @@ export default {
       return this.$store.getters.currentCalculation;
     },
     name() {
-      return this.currentOrder.name;
+      return this.currentItem.name;
     },
     time() {
       return this.currentOrder.time;
     },
-    discount: {
+    discount() {
+      return this.currentItem.discount;
+    },
+    extra: {
       get() {
-        return this.currentItem.discount;
+        return this.currentOrder.extra;
       },
       set(val) {
-        this.updateDiscount(val);
+        this.updateExtra(Math.min(Math.max(val, 0), 100));
       }
     },
     formatOrder() {
       return wNumb({
         thousand: "-"
       }).to(this.currentOrder.order);
+    },
+    prepay() {
+      // Пройшовся по всі категоріям і виводжу суму предоплати
+      return ItemTemplate.listCategory().reduce((acc, category) => {
+        return (
+          acc +
+          this.currentItem[category].reduce((acc, item) => {
+            return acc + item.total * (item.prepay / 100);
+          }, 0)
+        );
+      }, 0);
+    },
+    prepayPercentages() {
+      return Math.round((this.prepay / this.total) * 100);
     }
   },
   methods: {
+    // calc() {
+    //
+    // },
     toggleDetails() {
       this.isOpenDetails = !this.isOpenDetails;
     },
-    updateDiscount(val) {
-      this.$store.dispatch("updateCalculationDiscount", {
-        discount: val,
-        currentCalc: this.$store.getters.currentNumberCalculation
-      });
+    updateExtra(val) {
+      this.$store.dispatch("updateOrderExtra", { extra: val });
     },
     formatPrice(number) {
       return wNumb({

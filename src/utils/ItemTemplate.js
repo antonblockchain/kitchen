@@ -39,7 +39,7 @@ export default {
         total: 0,
         color: "",
         square: 0,
-        prepay: 0,
+        prepay: 10,
         options: []
       },
       sibling: {
@@ -77,10 +77,11 @@ export default {
       item: {
         id: CALC.generateID(),
         name: "b",
-        count: null,
+        count: 5,
         color: "Black",
-        price: null,
-        total: 0
+        price: 10,
+        prepay: 50,
+        total: 20
       }
     };
   },
@@ -113,6 +114,7 @@ export default {
       order: CALC.generateID(),
       user: "",
       time: CALC.generateDate(),
+      extra: 0,
       list: [this.calculation()],
       shopper: this.shopper()
     };
@@ -159,11 +161,12 @@ export default {
       order: 894291,
       user: "Ткаченко В. Д.",
       time: "27.07.2020",
+      extra: 17,
+      shopper: this.shopper(),
       list: [
         {
           name: "А",
-          // total: 162516,
-          total: 100000,
+          total: 162516,
           discount: 10,
           corps: [
             {
@@ -172,6 +175,7 @@ export default {
               total: 11264,
               color: "Red",
               square: 28.16,
+              prepay: 10,
               options: [
                 {
                   id: 222222,
@@ -205,6 +209,7 @@ export default {
               total: 151252,
               color: "Black f",
               square: 378.13,
+              prepay: 10,
               options: [
                 {
                   id: 555555,
@@ -239,7 +244,7 @@ export default {
               name: "",
               color: "",
               total: 0,
-              prepay: 0,
+              prepay: 2,
               square: 0,
               options: []
             }

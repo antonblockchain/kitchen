@@ -323,6 +323,10 @@ body {
       line-height: 1.3;
       color: #d9d9d9;
       text-decoration: none;
+      transition: all .2s ease-in-out;
+      &:hover{
+        color: #fb837a;
+      }
     }
 
     &_buffer,
@@ -826,6 +830,9 @@ body {
     line-height: 1.7;
     text-align: right;
     margin-left: auto;
+    .page__header_name{
+      text-align: right;
+    }
   }
 
   &__price {
@@ -948,12 +955,14 @@ body {
   }
 
   &__order {
-    background-color: #d9d9d9;
-
-    &:focus,
-    &:hover {
-      background-color: #000;
+    &:disabled{
+      background-color: #d9d9d9;
     }
+    //
+    //&:focus,
+    //&:hover {
+    //  background-color: #000;
+    //}
   }
 }
 

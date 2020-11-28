@@ -8,28 +8,26 @@
     <div v-if="square > 0" class="calc__size">{{ square }} м<sup>2</sup></div>
     <div v-if="count > 0" class="calc__size">{{ count }} шт.</div>
 
-    <div class="calc__interest color-red">
+    <div v-if="isOrder" class="calc__interest color-red">
       <label>
         <input
           type="text"
           class="page__header_name"
           v-autowidth="{
             maxWidth: '5rem',
-            minWidth: '0.6rem',
+            minWidth: '3rem',
             comfortZone: 0
           }"
-          v-model="discount"
+          v-model="prepay"
           placeholder="0"
-          v-mask="'##'"
+          v-mask="'###'"
           v-int
-        />
-      </label>
+      /></label>
       %
     </div>
-
-    <div class="calc__price">{{ price }} ₽</div>
+    <div class="calc__price">{{ isOrder ? priceWithDiscount : price }} ₽</div>
     <button
-      v-show="isOrder"
+      v-if="!isOrder"
       class="calc__remove"
       type="button"
       @click="deleteItem"
@@ -53,9 +51,7 @@ export default {
     isOrder: Boolean
   },
   data() {
-    return {
-      discount: 11
-    };
+    return {};
   },
   computed: {
     currentIndex() {
@@ -73,11 +69,34 @@ export default {
     color() {
       return this.item.color;
     },
+    priceCount() {
+      return this.item.total * this.extra;
+    },
     price() {
       return wNumb({
         decimals: 0,
         thousand: " "
-      }).to(this.item.total || 0);
+      }).to(this.priceCount || 0);
+    },
+    priceWithDiscount() {
+      return wNumb({
+        decimals: 0,
+        thousand: " "
+      }).to(this.priceCount * this.discount || 0);
+    },
+    discount() {
+      return 1 - this.$store.getters.currentCalculation.discount / 100;
+    },
+    prepay: {
+      get() {
+        return this.item.prepay;
+      },
+      set(val) {
+        this.item.prepay = Math.min(Math.max(val, 0), 100);
+      }
+    },
+    extra() {
+      return 1 + this.$store.getters.currentOrder.extra / 100;
     }
   },
   methods: {

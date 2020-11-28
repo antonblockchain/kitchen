@@ -8,7 +8,7 @@
       </div>
       <div v-if="square > 0" class="calc__size">{{ square }} м<sup>2</sup></div>
       <div v-if="count > 0" class="calc__size">{{ count }} шт.</div>
-      <div class="calc__price">{{ price }} ₽</div>
+      <div class="calc__price">{{ isOrder ? priceWithDiscount : price }} ₽</div>
     </div>
     <ul v-if="item.options">
       <LayersSibling
@@ -18,6 +18,7 @@
         :index="index"
         :category="category"
         :parentId="item.id"
+        :isOrder="isOrder"
       />
     </ul>
   </li>
@@ -34,7 +35,8 @@ export default {
     title: String,
     item: Object,
     index: Number,
-    category: String
+    category: String,
+    isOrder: Boolean
   },
   computed: {
     currentIndex() {
@@ -52,11 +54,26 @@ export default {
     color() {
       return this.item.color;
     },
+    priceCount() {
+      return this.item.total * this.extra;
+    },
     price() {
       return wNumb({
         decimals: 0,
         thousand: " "
-      }).to(this.item.total || 0);
+      }).to(this.priceCount || 0);
+    },
+    priceWithDiscount() {
+      return wNumb({
+        decimals: 0,
+        thousand: " "
+      }).to(this.priceCount * this.discount || 0);
+    },
+    discount() {
+      return 1 - this.$store.getters.currentCalculation.discount / 100;
+    },
+    extra() {
+      return 1 + this.$store.getters.currentOrder.extra / 100;
     }
   }
 };

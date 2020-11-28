@@ -111,7 +111,7 @@ export default {
     return {
       category: "facades",
       hasSiblings: false,
-      showCalc: true,
+      showCalc: this.item.width > 0,
       itemName: this.item.name,
       itemColor: this.item.color,
       itemType: this.item.type,

@@ -27,6 +27,9 @@ export default {
     setOrder(state, id) {
       state.currentOrder = state.data.findIndex(item => item.order === id);
     },
+    updateOrderExtra({ data, currentOrder }, { extra }) {
+      data[currentOrder].extra = +extra;
+    },
     copyCalculation({ data, currentOrder }, { name }) {
       if (data[currentOrder].list.length < 3) {
         let newItem = data[currentOrder].list.find(item => item.name === name);
@@ -168,6 +171,9 @@ export default {
     },
     setOrder({ commit }, data) {
       commit("setOrder", data);
+    },
+    updateOrderExtra({ commit }, data) {
+      commit("updateOrderExtra", data);
     },
     addCalculation({ commit }) {
       commit("addCalculation");

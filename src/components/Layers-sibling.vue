@@ -5,7 +5,7 @@
       {{ typeNames[type - 1] }} {{ article }}
     </div>
     <div class="calc__size">{{ square }} м<sup>2</sup></div>
-    <div class="calc__price">{{ price }} ₽</div>
+    <div class="calc__price">{{ isOrder ? priceWithDiscount : price }} ₽</div>
   </li>
 </template>
 
@@ -18,7 +18,8 @@ export default {
     item: Object,
     category: String,
     parentId: Number,
-    index: Number
+    index: Number,
+    isOrder: Boolean
   },
   data() {
     return {
@@ -29,11 +30,26 @@ export default {
     name() {
       return this.item.name;
     },
+    priceCount() {
+      return this.item.price * this.square * this.extra;
+    },
     price() {
       return wNumb({
         decimals: 0,
         thousand: " "
-      }).to(this.item.price * this.square);
+      }).to(this.priceCount || 0);
+    },
+    priceWithDiscount() {
+      return wNumb({
+        decimals: 0,
+        thousand: " "
+      }).to(this.priceCount * this.discount || 0);
+    },
+    discount() {
+      return 1 - this.$store.getters.currentCalculation.discount / 100;
+    },
+    extra() {
+      return 1 + this.$store.getters.currentOrder.extra / 100;
     },
     color() {
       return this.item.color;

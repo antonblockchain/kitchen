@@ -21,7 +21,7 @@
                     minWidth: '3.6rem',
                     comfortZone: 0
                   }"
-                  v-model="discount"
+                  v-model="extra"
                   placeholder="0"
                   v-mask="'###'"
                   v-int
@@ -108,14 +108,14 @@
           />
         </div>
         <pre
-          v-if="0"
-          style="line-height: 1;font-size: 0;position: fixed;right: 0;top: 35%;overflow: auto;
+          v-if="1"
+          style="line-height: 1;font-size: 0;position: fixed;right: 0;top: 45%;overflow: auto;
           background: rgba(255, 255, 255, 0.95);padding: 1rem 2rem;width: 39rem;z-index: 100;
           bottom: 8rem;"
         >
           <small>
             <code style="font-size: 1.1rem">
-              {{ currentCalculation }}
+              {{ currentOrder }}
             </code>
           </small>
         </pre>
@@ -186,23 +186,14 @@ export default {
         thousand: "-"
       }).to(this.order);
     },
-    discount: {
+    extra: {
       get() {
-        return this.currentCalculation.discount;
+        return this.currentOrder.extra;
       },
       set(val) {
-        this.updateDiscount(Math.min(Math.max(val, 0), 100));
+        this.updateExtra(Math.min(Math.max(val, 0), 100));
       }
     }
-    // order() {
-    //   return this.currentOrder.order;
-    // },
-    // user() {
-    //   return this.currentOrder.user;
-    // },
-    // time() {
-    //   return this.currentOrder.time;
-    // }
   },
   watch: {
     user() {
@@ -236,11 +227,8 @@ export default {
         user: this.user
       });
     },
-    updateDiscount(val) {
-      this.$store.dispatch("updateCalculationDiscount", {
-        discount: val,
-        currentCalc: this.$store.getters.currentNumberCalculation
-      });
+    updateExtra(val) {
+      this.$store.dispatch("updateOrderExtra", { extra: val });
     },
     goToOrder() {
       this.$router.push("/order");
