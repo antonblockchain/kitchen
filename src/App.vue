@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <fragment>
     <!--    <div id="nav" v-if="isLogin">-->
     <div id="nav">
       <router-link to="/">Home</router-link>
@@ -10,19 +10,23 @@
       |
       <router-link to="/order">Order</router-link>
       |
+      <router-link to="/print">Print</router-link>
+      |
       <button type="button" @click="logout">logout</button>
       isLogin: {{ isLogin }} | userId : {{ id }}
     </div>
     <router-view />
-  </div>
+  </fragment>
 </template>
 
 <script>
 import firebase from "firebase/app";
 import messages from "@/utils/message";
+import { Fragment } from "vue-fragment";
 
 export default {
   name: "App",
+  components: { Fragment },
   data() {
     return {
       id: "",

@@ -10,11 +10,13 @@ import VueTheMask from "vue-the-mask";
 import vSelect from "vue-select";
 import VueInputAutoWidth from "vue-input-autowidth";
 import onlyInt from "vue-input-only-number";
-import { Plugin } from "vue-fragment";
+// import Fragment from "vue-fragment";
+import ProgressBar from "vuejs-progress-bar";
 
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
+import "firebase/storage";
 
 firebase.initializeApp({
   apiKey: "AIzaSyDuPlteafFUVjCKSsXc8Q5cwh3Lf3ITibA",
@@ -44,7 +46,8 @@ firebase.auth().onAuthStateChanged(() => {
     Vue.use(VueTheMask);
     Vue.use(VueInputAutoWidth);
     Vue.use(onlyInt);
-    Vue.use(Plugin);
+    // Vue.use(Fragment.Plugin);
+    Vue.use(ProgressBar);
 
     vSelect.props.components.default = () => ({
       OpenIndicator: {

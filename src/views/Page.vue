@@ -1,34 +1,16 @@
 <template>
-  <div>
-    <div class="page">
-      <div class="page__left">
-        <div class="page__header">
-          <div class="page__header_title">
-            ЭТО<b
-              >ПРОСЧЕТ <span>{{ currentCalculation.name }}</span></b
-            >
-          </div>
-          <div class="page__header_info">
-            Заявка #{{ formatOrder
-            }}<span
-              >-
-              <label>
-                <input
-                  type="text"
-                  class="page__header_name"
-                  v-autowidth="{
-                    maxWidth: '20rem',
-                    minWidth: '3.6rem',
-                    comfortZone: 0
-                  }"
-                  v-model="extra"
-                  placeholder="0"
-                  v-mask="'###'"
-                  v-int
-                />
-              </label>
-            </span>
-            Для
+  <div class="page">
+    <div class="page__left">
+      <div class="page__header">
+        <div class="page__header_title">
+          ЭТО<b
+            >ПРОСЧЕТ <span>{{ currentCalculation.name }}</span></b
+          >
+        </div>
+        <div class="page__header_info">
+          Заявка #{{ formatOrder
+          }}<span
+            >-
             <label>
               <input
                 type="text"
@@ -38,107 +20,115 @@
                   minWidth: '3.6rem',
                   comfortZone: 0
                 }"
-                v-model="user"
-                placeholder="ФИО"
+                v-model="extra"
+                placeholder="0"
+                v-mask="'###'"
+                v-int
               />
             </label>
-            от {{ time }}
-          </div>
-        </div>
-
-        <div class="page__list">
-          <Corps
-            v-for="(item, index) in currentCalculation['corps']
-              .slice()
-              .reverse()"
-            :key="item.id"
-            :item="item"
-            :id="item.id"
-            :index="index"
-            :isLast="currentCalculation['corps'].length !== index + 1"
-          />
-
-          <Facades
-            v-for="(item, index) in currentCalculation['facades']
-              .slice()
-              .reverse()"
-            :key="item.id"
-            :item="item"
-            :id="item.id"
-            :index="index"
-            :isLast="currentCalculation['facades'].length !== index + 1"
-          />
-
-          <div v-for="category in listCategory" :key="category">
-            <Other
-              v-for="(item, index) in currentCalculation[category]
-                .slice()
-                .reverse()"
-              :key="item.id"
-              :item="item"
-              :id="item.id"
-              :index="index"
-              :isLast="currentCalculation[category].length !== index + 1"
-              :title="namesCategory[category]"
-              :category="category"
+          </span>
+          Для
+          <label>
+            <input
+              type="text"
+              class="page__header_name"
+              v-autowidth="{
+                maxWidth: '20rem',
+                minWidth: '3.6rem',
+                comfortZone: 0
+              }"
+              v-model="user"
+              placeholder="ФИО"
             />
-          </div>
+          </label>
+          от {{ time }}
         </div>
       </div>
-      <div class="page__right">
-        <pre
-          v-if="0"
-          style="line-height: 1;font-size: 0;position: fixed;right: 0;top: 0;overflow: auto;
-          background: rgba(255, 255, 255, 0.95);padding: 1rem 2rem;width: 39rem;z-index: 100;
-          bottom: 8rem;"
-        >
-          <small>
-            <code style="font-size: 1.1rem">
-              {{ currentOrder }}
-              {{ currentCalculation }}
-            </code>
-          </small>
-        </pre>
-        <div class="calc">
-          <CalcItem
-            v-for="(calc, index) in calculationList"
+
+      <div class="page__list">
+        <Corps
+          v-for="(item, index) in currentCalculation['corps'].slice().reverse()"
+          :key="item.id"
+          :item="item"
+          :id="item.id"
+          :index="index"
+          :isLast="currentCalculation['corps'].length !== index + 1"
+        />
+
+        <Facades
+          v-for="(item, index) in currentCalculation['facades']
+            .slice()
+            .reverse()"
+          :key="item.id"
+          :item="item"
+          :id="item.id"
+          :index="index"
+          :isLast="currentCalculation['facades'].length !== index + 1"
+        />
+
+        <div v-for="category in listCategory" :key="category">
+          <Other
+            v-for="(item, index) in currentCalculation[category]
+              .slice()
+              .reverse()"
+            :key="item.id"
+            :item="item"
+            :id="item.id"
             :index="index"
-            :key="calc.name"
-            :item="calc"
+            :isLast="currentCalculation[category].length !== index + 1"
+            :title="namesCategory[category]"
+            :category="category"
           />
         </div>
-        <pre
-          v-if="1"
-          style="line-height: 1;font-size: 0;position: fixed;right: 0;top: 45%;overflow: auto;
+      </div>
+    </div>
+    <div class="page__right">
+      <pre
+        v-if="0"
+        style="line-height: 1;font-size: 0;position: fixed;right: 0;top: 45%;overflow: auto;
           background: rgba(255, 255, 255, 0.95);padding: 1rem 2rem;width: 39rem;z-index: 100;
           bottom: 8rem;"
-        >
-          <small>
-            <code style="font-size: 1.1rem">
-              {{ currentOrder }}
-            </code>
-          </small>
-        </pre>
+      >
+        <small>
+          <code style="font-size: 1.1rem">
+            {{ currentOrder }}
+          </code>
+        </small>
+      </pre>
 
+      <div class="calc">
+        <CalcItem
+          v-for="(calc, index) in calculationList"
+          :index="index"
+          :key="calc.name"
+          :item="calc"
+        />
+      </div>
+
+      <button
+        v-if="calculationList.length < 3"
+        class="calc__add btn"
+        type="button"
+        @click="addCalculation"
+      >
+        <span class="icon icon-plus"></span>
+      </button>
+      <div class="calc__bottom">
         <button
-          v-if="calculationList.length < 3"
-          class="calc__add btn"
+          class="calc__order btn"
           type="button"
-          @click="addCalculation"
+          :disabled="currentOrder.list.length > 1"
+          @click="goToOrder"
         >
-          <span class="icon icon-plus"></span>
+          ОФОРМИТЬ ДОГОВОР
         </button>
-        <div class="calc__bottom">
-          <button
-            class="calc__order btn"
-            type="button"
-            :disabled="currentOrder.list.length > 1"
-            @click="goToOrder"
-          >
-            ОФОРМИТЬ ДОГОВОР
-          </button>
-          <button class="btn" type="button">СФОРМИРОВАТЬ КП</button>
-        </div>
+        <button
+          class="btn"
+          type="button"
+          :disabled="currentOrder.list.length > 1"
+        >
+          СФОРМИРОВАТЬ КП
+        </button>
       </div>
     </div>
   </div>

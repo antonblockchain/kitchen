@@ -11,7 +11,7 @@ const routes = [
     component: () => import("../views/Home"),
     beforeEnter: (to, from, next) => {
       if (firebase.auth().currentUser) {
-        next("/page");
+        next("/main");
       } else {
         next();
       }
@@ -33,6 +33,12 @@ const routes = [
     path: "/order",
     name: "Order",
     component: () => import("../views/Order"),
+    meta: { requiresAuth: true }
+  },
+  {
+    path: "/print",
+    name: "Print",
+    component: () => import("../views/Print"),
     meta: { requiresAuth: true }
   }
 ];

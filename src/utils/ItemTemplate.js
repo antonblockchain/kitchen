@@ -121,21 +121,26 @@ export default {
   },
   shopper() {
     return {
-      shopper: {
-        firstName: "",
-        lastName: "",
-        middleName: "",
-        email: "",
-        number: "",
-        address: {
-          city: "",
-          flat: "",
-          entrance: "",
-          floor: ""
-        },
-        file: "",
-        pay: ""
-      }
+      firstName: "",
+      lastName: "",
+      middleName: "",
+      email: "",
+      number: [
+        {
+          id: CALC.generateID(),
+          tel: ""
+        }
+      ],
+      address: {
+        city: "",
+        flat: "",
+        entrance: "",
+        floor: "",
+        comment: ""
+      },
+      date: "",
+      file: null,
+      pay: ""
     };
   },
   calculation() {
