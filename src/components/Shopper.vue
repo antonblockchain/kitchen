@@ -145,7 +145,7 @@
       </label>
     </div>
     <div class="calc__bottom">
-      <button class="btn" type="button" @click="goToPrint">
+      <button class="btn" type="button" @click="goToPrint" :disabled="true">
         ПЕЧАТЬ ДОГОВОРА
       </button>
       <button class="calc__order btn" type="button" @click="goToMain">
@@ -289,5 +289,3 @@ export default {
   }
 };
 </script>
-
-<style scoped></style>

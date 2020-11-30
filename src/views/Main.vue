@@ -2,7 +2,7 @@
   <div class="lc">
     <div class="lc__top">
       <div class="lc__title page__header_title">ЭТО<b>ПРОСЧЕТ</b></div>
-      <div class="lc__name">Ткаченко Владислав</div>
+      <div class="lc__name">{{ managerName }}</div>
     </div>
     <ul class="lc__list">
       <li>
@@ -37,6 +37,9 @@ import wNumb from "wnumb";
 export default {
   name: "Main",
   computed: {
+    managerName() {
+      return this.$store.getters.manager.name;
+    },
     orderList() {
       return this.$store.getters.orderList;
     }

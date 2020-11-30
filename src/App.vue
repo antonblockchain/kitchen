@@ -64,7 +64,6 @@ export default {
   background: rgba(#fff, 0.8);
   left: 0;
   bottom: 0;
-  right: 0;
   text-align: center;
   padding: 15px 10px;
   box-shadow: 0 0 1rem #2c3e50;

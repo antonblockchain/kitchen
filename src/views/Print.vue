@@ -2,11 +2,7 @@
   <div class="print">
     <div class="print__item">
       <div class="page__header page__header-inside">
-        <div class="page__header_title">
-          ЭТО<b
-            >ПРОСЧЕТ <span>{{ name }}</span>
-          </b>
-        </div>
+        <div class="page__header_title">ЭТО<b>ПРОСЧЕТ</b></div>
         <div class="page__header_info">
           Заявка #{{ formatOrder
           }}<span
@@ -20,6 +16,11 @@
       </div>
 
       <div class="calc__item">
+        <div class="calc__head">
+          <div class="calc__head_title">
+            ПРОСЧЕТ <span>{{ name }}</span>
+          </div>
+        </div>
         <div class="calc__content">
           <ul v-for="cat in categoryList" :key="cat">
             <LayersItem
@@ -37,16 +38,16 @@
             <div class="calc__total_title">ИТОГО:</div>
             <div class="calc__total_price">{{ formatPrice(total) }} ₽</div>
           </div>
-          <div class="calc__row">
-            <div class="calc__name color-red">Предоплата</div>
-            <div class="calc__interest color-red">{{ prepayPercentages }}%</div>
-            <div class="calc__price color-red">{{ formatPrice(prepay) }} ₽</div>
-          </div>
-          <div class="calc__row">
-            <div class="calc__name">Постоплата</div>
-            <div class="calc__interest">{{ 100 - prepayPercentages }}%</div>
-            <div class="calc__price">{{ formatPrice(total - prepay) }} ₽</div>
-          </div>
+          <!--          <div class="calc__row">-->
+          <!--            <div class="calc__name color-red">Предоплата</div>-->
+          <!--            <div class="calc__interest color-red">{{ prepayPercentages }}%</div>-->
+          <!--            <div class="calc__price color-red">{{ formatPrice(prepay) }} ₽</div>-->
+          <!--          </div>-->
+          <!--          <div class="calc__row">-->
+          <!--            <div class="calc__name">Постоплата</div>-->
+          <!--            <div class="calc__interest">{{ 100 - prepayPercentages }}%</div>-->
+          <!--            <div class="calc__price">{{ formatPrice(total - prepay) }} ₽</div>-->
+          <!--          </div>-->
         </div>
       </div>
       <img v-if="shopper.file" :src="shopper.file" alt="img" />

@@ -24,8 +24,12 @@
         />
       </label>
 
-      <button class="page__btn btn" @click="toggleCalc" type="button">
-        <span class="icon icon-layers"></span>
+      <button
+        class="page__btn page__btn-calc btn"
+        @click="toggleCalc"
+        type="button"
+      >
+        <span class="icon icon-calc"></span>
       </button>
       <button
         v-if="isLast"
@@ -38,7 +42,7 @@
     </div>
 
     <div v-show="!showCalc" class="page__item page__item-red">
-      <label class="page__label page__label-type">
+      <label class="page__label page__label-type" v-if="0">
         <span class="page__text">Тип</span>
         <span class="page__label_select">
           <v-select
@@ -50,7 +54,7 @@
           />
         </span>
       </label>
-      <label class="page__label page__label-article">
+      <label class="page__label page__label-fill">
         <span class="page__text">Артикул</span>
         <input
           type="text"

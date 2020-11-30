@@ -10,8 +10,7 @@ export default {
       position: "Ваш персональный менеджер дизайнер",
       phone: "7 345435345,7 342342",
       email: "efaf@fafaf.ru",
-      url:
-        "https://firebasestorage.googleapis.com/v0/b/kitchen-calc-724d4.appspot.com/o/894291_%D0%A2%D0%BA%D0%B0%D1%87%D0%B5%D0%BD%D0%BA%D0%BE%20%D0%92.%20%D0%94.?alt=media&token=7844bca3-ae9b-45cb-839f-ba7faae50fa7"
+      url: "https://www.liveseysolar.com/wp-content/uploads/2013/07/manager.jpg"
     },
     data: [ItemTemplate.fakeData()]
   },
