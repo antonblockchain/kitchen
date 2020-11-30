@@ -46,6 +46,10 @@ export default {
       this.email = await this.$store.dispatch("getEmail");
       this.$store.getters.manager.email = this.email;
     });
+  },
+  mounted() {
+    this.$store.dispatch("fetchOptions");
+    this.$store.dispatch("fetchUserInfo");
   }
   // async mounted() {
   //   try {
@@ -61,7 +65,7 @@ export default {
 @import "assets/scss/main";
 
 #nav {
-  display: none;
+  //display: none;
   position: fixed;
   background: rgba(#fff, 0.8);
   left: 0;

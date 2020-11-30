@@ -5,13 +5,6 @@ export default {
   state: {
     currentOrder: 0,
     currentCalculation: 0,
-    user: {
-      name: "",
-      position: "",
-      phone: "",
-      email: "",
-      url: ""
-    },
     data: [ItemTemplate.fakeData()]
   },
   mutations: {
@@ -248,9 +241,6 @@ export default {
     },
     currentNumberCalculation: state => {
       return state.currentCalculation;
-    },
-    manager: state => {
-      return state.user;
     }
   }
 };
