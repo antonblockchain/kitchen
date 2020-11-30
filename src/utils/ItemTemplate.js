@@ -39,7 +39,7 @@ export default {
         total: 0,
         color: "",
         square: 0,
-        prepay: 10,
+        prepay: 0,
         options: []
       },
       sibling: {
@@ -76,12 +76,12 @@ export default {
     return {
       item: {
         id: CALC.generateID(),
-        name: "b",
-        count: 5,
-        color: "Black",
-        price: 10,
-        prepay: 50,
-        total: 20
+        name: "",
+        count: 30,
+        color: "",
+        price: 200,
+        prepay: 5,
+        total: 100
       }
     };
   },
@@ -188,7 +188,7 @@ export default {
                   price: 400,
                   color: "",
                   square: 8.76,
-                  type: 2,
+                  type: 3,
                   width: 111,
                   height: 333,
                   depth: 333,
@@ -200,7 +200,7 @@ export default {
                   price: 400,
                   color: "",
                   square: 19.4,
-                  type: 1,
+                  type: 3,
                   width: 111,
                   height: 222,
                   depth: 333,
@@ -222,7 +222,7 @@ export default {
                   price: 400,
                   color: "",
                   square: 32.7,
-                  type: 1,
+                  type: 3,
                   width: 333,
                   height: 333,
                   depth: 333,

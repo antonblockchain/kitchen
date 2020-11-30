@@ -77,16 +77,18 @@ export default {
         }
       );
     },
-    updateCalculation({ data, currentOrder, currentCalculation }) {
-      const order = data[currentOrder].list[currentCalculation];
-      let total = 0;
-      const categoryList = ItemTemplate.listCategory();
+    updateCalculation({ data, currentOrder }) {
+      data[currentOrder].list.forEach(order => {
+        let total = 0;
+        const categoryList = ItemTemplate.listCategory();
+        total += categoryList.reduce((acc, category) => {
+          return (
+            acc + order[category].reduce((acc, item) => acc + item.total, 0)
+          );
+        }, 0);
 
-      total += categoryList.reduce((acc, category) => {
-        return acc + order[category].reduce((acc, item) => acc + item.total, 0);
-      }, 0);
-
-      order.total = total;
+        order.total = total;
+      });
     },
     updateCalculationDiscount(
       { data, currentOrder },
@@ -213,6 +215,7 @@ export default {
     },
     deleteItem({ commit }, data) {
       commit("deleteItem", data);
+      commit("updateCalculation");
     },
     addSiblings({ commit }, data) {
       commit("addSiblings", data);
@@ -242,6 +245,9 @@ export default {
     },
     currentCalculation: state => {
       return state.data[state.currentOrder].list[state.currentCalculation];
+    },
+    currentNumberCalculation: state => {
+      return state.currentCalculation;
     },
     manager: state => {
       return state.user;

@@ -122,6 +122,9 @@ export default {
     },
     square() {
       this.updateItem();
+    },
+    total() {
+      this.updateItem();
     }
   },
   methods: {

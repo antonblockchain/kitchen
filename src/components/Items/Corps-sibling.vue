@@ -131,15 +131,20 @@ export default {
       itemWidth: this.item.width,
       itemHeight: this.item.height,
       itemDepth: this.item.depth,
-      itemCount: this.item.count,
-      optionsType: [
-        { name: "Низ", type: 1 },
-        { name: "Верх", type: 2 },
-        { name: "Пенал", type: 3 }
-      ]
+      itemCount: this.item.count
     };
   },
   computed: {
+    optionsType() {
+      const arr = [];
+      if (this.checkList()) {
+        arr.push({ name: "Низ", type: 1 });
+        arr.push({ name: "Верх", type: 2 });
+      } else {
+        arr.push({ name: "Пенал", type: 3 });
+      }
+      return arr;
+    },
     square() {
       const res = CALC.square(
         this.itemType,
@@ -160,6 +165,7 @@ export default {
   watch: {
     itemName() {
       this.updateItem();
+      this.filterOptions();
     },
     itemColor() {
       this.updateItem();
@@ -172,6 +178,21 @@ export default {
     }
   },
   methods: {
+    filterOptions() {
+      if (this.checkList()) {
+        if (this.itemType === 3) {
+          this.itemType = 0;
+        }
+      } else {
+        if (this.itemType !== 3) {
+          this.itemType = 0;
+        }
+      }
+    },
+    checkList() {
+      const list = ["эмаль", "пленка", "шпон", "массив", "каменный шпон"];
+      return list.indexOf(this.itemName.toLowerCase()) !== -1;
+    },
     cloneItem() {
       this.hasSiblings = true;
       const newSibling = {

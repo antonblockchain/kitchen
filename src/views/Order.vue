@@ -90,7 +90,7 @@
           <span class="icon icon-layers"></span>
         </button>
         <div v-if="isOpenDetails" class="layers__list">
-          <ul v-for="cat in categoryList" :key="cat">
+          <ul v-for="cat in [...categoryList].splice(0, 2)" :key="cat">
             <LayersItem
               v-for="(item, index) in currentItem[cat].slice().reverse()"
               :key="item.id"

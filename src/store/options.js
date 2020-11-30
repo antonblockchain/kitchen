@@ -22,7 +22,7 @@ export default {
       try {
         await new Promise(resolve => setTimeout(resolve, 1500));
         const data = [
-          { name: "a", price: 100 },
+          { name: "А", price: 100 },
           { name: "Brilliant", price: 400 },
           { name: "b", price: 200 },
           { name: "c", price: 300 }

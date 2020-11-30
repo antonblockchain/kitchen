@@ -83,7 +83,7 @@
           <span class="icon icon-layers"></span>
         </button>
         <div v-if="isOpenDetails" class="layers__list">
-          <ul v-for="cat in categoryList" :key="cat">
+          <ul v-for="cat in [...categoryList].splice(0, 2)" :key="cat">
             <LayersItem
               v-for="(item, index) in item[cat].slice().reverse()"
               :key="item.id"
@@ -119,8 +119,8 @@ export default {
   },
   data() {
     return {
-      isOpenContent: !false,
-      isOpenSettings: !false,
+      isOpenContent: false,
+      isOpenSettings: false,
       isOpenDetails: false,
       name: this.item.name
     };
@@ -153,8 +153,8 @@ export default {
       return ItemTemplate.namesCategory();
     },
     isShow() {
-      return false;
-      // return this.$store.getters.currentNumberCalculation === this.index;
+      // return false;
+      return this.$store.getters.currentNumberCalculation === this.index;
     }
   },
   methods: {
