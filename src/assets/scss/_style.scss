@@ -1250,8 +1250,15 @@ body {
 .vs__selected {
   margin: 0;
   padding: 0 .1rem 0 1.5rem;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  align-items: flex-start;
+  line-height: 3.4rem;
 }
-
+.vs__dropdown-option{
+  white-space: normal;
+}
 .vs--single.vs--open .vs__selected {
   top: 50%;
   transform: translateY(-50%);
@@ -1278,7 +1285,7 @@ body {
   &__item {
   }
 
-  &__info{
+  &__info {
     margin-top: 5rem;
   }
 
@@ -1290,25 +1297,28 @@ body {
   .calc__total {
     padding-left: 0;
   }
-  &__table{
+
+  &__table {
     display: none;
 
     width: 100%;
     text-align: left;
     font-size: 1.5rem;
     margin: 2rem 0 1rem;
+
     th,
-    td{
+    td {
       border-bottom: 1px solid #000;
     }
-    th{
+
+    th {
       font-size: 1.3rem;
       width: 40%;
       border-right: 1px solid #000;
     }
   }
 
-  .calc__head{
+  .calc__head {
     padding-left: 0;
     min-height: 1rem;
     margin-bottom: 1rem;
@@ -1320,10 +1330,10 @@ body {
   html {
     font-size: 9px !important;
   }
-  .print__btn{
+  .print__btn {
     display: none;
   }
-  #nav{
+  #nav {
     display: none;
   }
 }

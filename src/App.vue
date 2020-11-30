@@ -13,7 +13,7 @@
       <router-link to="/print">Print</router-link>
       |
       <button type="button" @click="logout">logout</button>
-      isLogin: {{ isLogin }} | userId : {{ id }}
+      isLogin: {{ isLogin }} | email : {{ email }}
     </div>
     <router-view />
   </fragment>
@@ -29,7 +29,7 @@ export default {
   components: { Fragment },
   data() {
     return {
-      id: "",
+      email: "",
       isLogin: false
     };
   },
@@ -43,16 +43,17 @@ export default {
   created() {
     firebase.auth().onAuthStateChanged(async user => {
       this.isLogin = !!user;
-      this.id = await this.$store.dispatch("getUid");
+      this.email = await this.$store.dispatch("getEmail");
+      this.$store.getters.manager.email = this.email;
     });
-  },
-  async mounted() {
-    try {
-      this.id = await this.$store.dispatch("getUid");
-    } catch (e) {
-      console.log(e);
-    }
   }
+  // async mounted() {
+  //   try {
+  //     this.id = await this.$store.dispatch("getUid");
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // }
 };
 </script>
 
@@ -60,6 +61,7 @@ export default {
 @import "assets/scss/main";
 
 #nav {
+  display: none;
   position: fixed;
   background: rgba(#fff, 0.8);
   left: 0;

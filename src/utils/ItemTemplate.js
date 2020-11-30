@@ -77,11 +77,11 @@ export default {
       item: {
         id: CALC.generateID(),
         name: "",
-        count: 30,
+        count: 0,
         color: "",
-        price: 200,
-        prepay: 5,
-        total: 100
+        price: 0,
+        prepay: 0,
+        total: 0
       }
     };
   },

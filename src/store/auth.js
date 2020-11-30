@@ -23,9 +23,14 @@ export default {
         throw e;
       }
     },
-    getUid() {
+    // getUid() {
+    //   const user = firebase.auth().currentUser;
+    //   console.log(user);
+    //   return user ? user.uid : null;
+    // },
+    getEmail() {
       const user = firebase.auth().currentUser;
-      return user ? user.uid : null;
+      return user ? user.email : null;
     },
     async logout() {
       await firebase.auth().signOut();

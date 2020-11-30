@@ -121,9 +121,7 @@ export default {
   components: { LayersItem, CalcSibling, Shopper },
   data() {
     return {
-      dataInfo: "-",
       isOpenDetails: false
-      // user: null
     };
   },
   computed: {
@@ -209,32 +207,6 @@ export default {
         thousand: " "
       }).to(number);
     }
-  },
-  mounted() {
-    // const id = "1DeEdfoquoLnBIczmX_6wg7bwwtFeQOPDHO-BMtAVDtg";
-    // axios
-    //   .get(
-    //     `https://spreadsheets.google.com/feeds/cells/${id}/1/public/full?alt=json`
-    //   )
-    //   .then(res => {
-    //     const { data } = res;
-    //     const newArr = [];
-    //     console.log(data.feed.entry);
-    //     data.feed.entry.splice(3).forEach((item, index) => {
-    //       let value = item["gs$cell"]["inputValue"];
-    //       if (index % 3 === 0) {
-    //         newArr.push({ name: value });
-    //       } else if (index % 2 === 0) {
-    //         newArr[newArr.length - 1].type = value;
-    //       } else {
-    //         newArr[newArr.length - 1].price = value;
-    //       }
-    //       console.log(item);
-    //     });
-    //     console.log(newArr);
-    //     this.dataInfo = newArr;
-    //   })
-    //   .catch(e => console.log(e));
   }
 };
 </script>

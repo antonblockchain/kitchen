@@ -6,11 +6,11 @@ export default {
     currentOrder: 0,
     currentCalculation: 0,
     user: {
-      name: "Ткаченко Владислав",
-      position: "Ваш персональный менеджер дизайнер",
-      phone: "7 345435345,7 342342",
-      email: "efaf@fafaf.ru",
-      url: "https://www.liveseysolar.com/wp-content/uploads/2013/07/manager.jpg"
+      name: "",
+      position: "",
+      phone: "",
+      email: "",
+      url: ""
     },
     data: [ItemTemplate.fakeData()]
   },
