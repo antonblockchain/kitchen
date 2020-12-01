@@ -191,7 +191,7 @@ export default {
       }, 0);
     },
     prepayPercentages() {
-      return Math.round((this.prepay / this.total) * 100);
+      return Math.round((this.prepay / this.total) * 100) || 0;
     }
   },
   methods: {

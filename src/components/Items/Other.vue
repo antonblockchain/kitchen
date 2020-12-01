@@ -1,5 +1,5 @@
 <template>
-  <div class="page__item" :class="{ 'page__item-black': isLast }">
+  <div class="page__item" :class="{ '-page__item-black': isLast }">
     <label class="page__label page__label-fill">
       <!--      <span class="page__text">{{ id }}</span>-->
       <span class="page__text">{{ title }} {{ currentIndex }}</span>

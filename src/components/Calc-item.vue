@@ -153,8 +153,8 @@ export default {
       return ItemTemplate.namesCategory();
     },
     isShow() {
-      // return false;
-      return this.$store.getters.currentNumberCalculation === this.index;
+      return false;
+      // return this.$store.getters.currentNumberCalculation === this.index;
     }
   },
   methods: {
