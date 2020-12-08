@@ -25,8 +25,9 @@
           type="text"
           class="page__input page__input-number"
           placeholder=""
-          :value="square"
-          readonly
+          v-model.number="square"
+          :readonly="item.options.length > 0"
+          v-int
         />
       </label>
 
@@ -94,19 +95,33 @@ export default {
     currentIndex() {
       return this.index !== 0 ? this.index + 1 : "";
     },
-    square() {
-      return CALC.fixNumber(
-        this.item.options.reduce((acc, item) => {
-          return acc + item.square;
-        }, 0)
-      );
+    square: {
+      get() {
+        if (this.item.options.length > 0) {
+          return CALC.fixNumber(
+            this.item.options.reduce((acc, item) => {
+              return acc + item.square;
+            }, 0)
+          );
+        } else {
+          return this.item.square;
+        }
+      },
+      set(val) {
+        this.updateSquare(val);
+      }
     },
     total() {
-      return CALC.fixNumber(
-        this.item.options.reduce((acc, item) => {
-          return acc + item.price * item.square;
-        }, 0)
-      );
+      if (this.item.options.length > 0) {
+        return CALC.fixNumber(
+          this.item.options.reduce((acc, item) => {
+            return acc + item.price * item.square;
+          }, 0)
+        );
+      } else {
+        const res = this.options.find(item => item.name === this.itemName);
+        return CALC.fixNumber(this.square * (res ? res.price : 0));
+      }
     },
     options() {
       return this.$store.getters.getOptions[this.category];
@@ -115,6 +130,7 @@ export default {
   watch: {
     itemName() {
       this.updateItem();
+      this.updateNames();
     },
     itemColor() {
       this.updateItem();
@@ -156,6 +172,29 @@ export default {
         category: this.category,
         id: this.item.id,
         newData
+      });
+    },
+    updateSquare(square) {
+      let newData = {
+        square: +square || 0
+      };
+      this.$store.dispatch("updateItem", {
+        category: this.category,
+        id: this.item.id,
+        newData
+      });
+    },
+    updateNames() {
+      this.item.options.forEach(item => {
+        const newData = {
+          name: this.itemName
+        };
+        this.$store.dispatch("updateSiblings", {
+          category: this.category,
+          parentId: this.item.id,
+          id: item.id,
+          newData
+        });
       });
     }
   }

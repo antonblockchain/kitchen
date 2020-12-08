@@ -1,50 +1,24 @@
 <template>
   <div class="print">
-    <div class="print__item">
-      <div class="page__header page__header-inside">
-        <div class="page__header_title">ЭТО<b>ПРОСЧЕТ</b></div>
-        <div class="page__header_info">
-          Заявка #{{ formatOrder
-          }}<span
-            >-
-            <span class="page__header_name">{{ extra }}</span>
-          </span>
-          Для
-          <span class="page__header_name">{{ user }}</span>
-          от {{ time }}
-        </div>
+    <div class="page__header page__header-inside">
+      <div class="page__header_title">ЭТО<b>ПРОСЧЕТ</b></div>
+      <div class="page__header_info">
+        Заявка #{{ formatOrder
+        }}<span
+          >-
+          <span class="page__header_name">{{ extra }}</span>
+        </span>
+        Для
+        <span class="page__header_name">{{ user }}</span>
+        от {{ time }}
       </div>
-
-      <PrintItem
-        v-for="item in currentOrder.list"
-        :key="item.name"
-        :currentItem="item"
-      />
     </div>
-    <div class="print__info">
-      <img :src="manager.url" :alt="manager.name" />
-      <p>
-        <b>{{ manager.position }}</b>
-      </p>
-      <h3>{{ manager.name }}</h3>
-      <p>
-        <b v-for="item in manager.phone.split(',')" :key="item">
-          {{ item }}
-          <br />
-        </b>
-      </p>
-      <p>
-        <b>{{ manager.email }}</b>
-      </p>
 
-      <button class="print__btn btn btn-block" type="button" @click="print">
-        Печать
-      </button>
-      <br /><br />
-      <button class="print__btn btn btn-block" type="button" @click="back">
-        Назад
-      </button>
-    </div>
+    <PrintItem
+      v-for="item in currentOrder.list"
+      :key="item.name"
+      :currentItem="item"
+    />
   </div>
 </template>
 
@@ -57,8 +31,7 @@ export default {
   components: { PrintItem },
   data() {
     return {
-      isOpenDetails: false,
-      showPrintBtn: true
+      isOpenDetails: false
     };
   },
   computed: {
@@ -81,17 +54,6 @@ export default {
       return wNumb({
         thousand: "-"
       }).to(this.currentOrder.order);
-    }
-  },
-  methods: {
-    print() {
-      this.showPrintBtn = false;
-      setTimeout(() => {
-        window.print();
-      }, 1);
-    },
-    back() {
-      this.$router.push("/order");
     }
   }
 };

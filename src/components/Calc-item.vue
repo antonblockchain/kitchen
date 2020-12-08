@@ -9,6 +9,7 @@
         class="calc__nav"
         :class="{ active: isOpenSettings }"
       >
+        <CalcFile :item="item" />
         <div class="calc__nav_menu">
           <button type="button" class="calc__nav_link" @click="editCalculation">
             Редактировать
@@ -92,6 +93,7 @@
               :index="index"
               :category="cat"
               :isOrder="false"
+              :letter="name"
             />
           </ul>
         </div>
@@ -109,18 +111,19 @@ import wNumb from "wnumb";
 import CalcSibling from "@/components/Calc-sibling";
 import LayersItem from "@/components/Layers-item";
 import ItemTemplate from "@/utils/ItemTemplate";
+import CalcFile from "@/components/Calc-file";
 
 export default {
   name: "Calc-item",
-  components: { LayersItem, CalcSibling },
+  components: { CalcFile, LayersItem, CalcSibling },
   props: {
     item: Object,
     index: Number
   },
   data() {
     return {
-      isOpenContent: false,
-      isOpenSettings: false,
+      isOpenContent: !false,
+      isOpenSettings: !false,
       isOpenDetails: false,
       name: this.item.name
     };

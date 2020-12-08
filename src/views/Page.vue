@@ -84,7 +84,7 @@
     </div>
     <div class="page__right">
       <pre
-        v-if="0"
+        v-if="1"
         style="line-height: 1;font-size: 0;position: fixed;right: 0;top: 45%;overflow: auto;
           background: rgba(255, 255, 255, 0.95);padding: 1rem 2rem;width: 39rem;z-index: 100;
           bottom: 8rem;"

@@ -109,7 +109,11 @@ export default {
       );
     },
     showSelect() {
-      return ["handles", "other"].indexOf(this.category) === -1;
+      return (
+        ["wall_panel_psc", "tabletop_psc", "handles", "other"].indexOf(
+          this.category
+        ) === -1
+      );
     },
     currentIndex() {
       return this.index !== 0 ? this.index + 1 : "";

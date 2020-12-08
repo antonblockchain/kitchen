@@ -8,7 +8,8 @@
       <div v-if="count > 0" class="calc__size">{{ count }} шт.</div>
       <div class="calc__price">{{ isOrder ? priceWithDiscount : price }} ₽</div>
     </div>
-    <ul v-if="item.options">
+    <ul v-if="!isOrder">
+      <!--    <ul v-if="item.options">-->
       <LayersSibling
         v-for="(layer, index) in item.options"
         :key="layer.id"
@@ -17,6 +18,7 @@
         :category="category"
         :parentId="item.id"
         :isOrder="isOrder"
+        :letter="letter"
       />
     </ul>
   </li>
@@ -34,7 +36,8 @@ export default {
     item: Object,
     index: Number,
     category: String,
-    isOrder: Boolean
+    isOrder: Boolean,
+    letter: String
   },
   computed: {
     currentIndex() {

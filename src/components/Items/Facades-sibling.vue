@@ -54,7 +54,8 @@
           />
         </span>
       </label>
-      <label class="page__label page__label-fill">
+      <!--      <div class="page__label page__label-fill"></div>-->
+      <label v-if="false" class="page__label page__label-fill">
         <span class="page__text">Артикул</span>
         <input
           type="text"
@@ -63,7 +64,7 @@
           placeholder=""
         />
       </label>
-      <label class="page__label">
+      <label class="page__label page__label-fill">
         <span class="page__text">Ширина</span>
         <input
           type="text"
@@ -72,7 +73,7 @@
           v-model.number="itemWidth"
         />
       </label>
-      <label class="page__label">
+      <label class="page__label page__label-fill">
         <span class="page__text">Высота</span>
         <input
           type="text"
@@ -116,7 +117,6 @@ export default {
       category: "facades",
       hasSiblings: false,
       showCalc: this.item.width > 0,
-      itemName: this.item.name,
       itemColor: this.item.color,
       itemType: this.item.type,
       itemWidth: this.item.width,
@@ -130,6 +130,14 @@ export default {
     };
   },
   computed: {
+    itemName: {
+      get() {
+        return this.item.name;
+      },
+      set(name) {
+        this.updateName(name);
+      }
+    },
     square() {
       const res = CALC.squareAB(this.itemWidth, this.itemHeight);
       if (res > 0) {
@@ -198,7 +206,17 @@ export default {
         id: this.item.id,
         newData
       });
-      this.$store.dispatch("updateCalculation");
+      // this.$store.dispatch("updateCalculation");
+    },
+    updateName(name) {
+      this.$store.dispatch("updateSiblings", {
+        category: this.category,
+        parentId: this.parentId,
+        id: this.item.id,
+        newData: {
+          name: name
+        }
+      });
     }
   }
 };

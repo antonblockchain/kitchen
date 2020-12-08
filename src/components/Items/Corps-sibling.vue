@@ -55,21 +55,21 @@
         </span>
       </label>
       <label class="page__label">
-        <span class="page__text">Ширина</span>
-        <input
-          type="text"
-          class="page__input"
-          v-mask="'########'"
-          v-model.number="itemWidth"
-        />
-      </label>
-      <label class="page__label">
         <span class="page__text">Высота</span>
         <input
           type="text"
           class="page__input"
           v-mask="'########'"
           v-model.number="itemHeight"
+        />
+      </label>
+      <label class="page__label">
+        <span class="page__text">Ширина</span>
+        <input
+          type="text"
+          class="page__input"
+          v-mask="'########'"
+          v-model.number="itemWidth"
         />
       </label>
       <label class="page__label">
@@ -125,7 +125,6 @@ export default {
       category: "corps",
       hasSiblings: false,
       showCalc: this.item.width > 0,
-      itemName: this.item.name,
       itemColor: this.item.color,
       itemType: this.item.type,
       itemWidth: this.item.width,
@@ -135,15 +134,20 @@ export default {
     };
   },
   computed: {
-    optionsType() {
-      const arr = [];
-      if (this.checkList()) {
-        arr.push({ name: "Низ", type: 1 });
-        arr.push({ name: "Верх", type: 2 });
-      } else {
-        arr.push({ name: "Пенал", type: 3 });
+    itemName: {
+      get() {
+        return this.item.name;
+      },
+      set(name) {
+        this.updateName(name);
       }
-      return arr;
+    },
+    optionsType() {
+      return [
+        { name: "Низ", type: 1 },
+        { name: "Верх", type: 2 },
+        { name: "Пенал", type: 3 }
+      ];
     },
     square() {
       const res = CALC.square(
@@ -165,12 +169,12 @@ export default {
   watch: {
     itemName() {
       this.updateItem();
-      this.filterOptions();
     },
     itemColor() {
       this.updateItem();
     },
     itemType() {
+      this.updateValues();
       this.updateItem();
     },
     square() {
@@ -178,20 +182,26 @@ export default {
     }
   },
   methods: {
-    filterOptions() {
-      if (this.checkList()) {
-        if (this.itemType === 3) {
-          this.itemType = 0;
-        }
-      } else {
-        if (this.itemType !== 3) {
-          this.itemType = 0;
-        }
+    updateValues() {
+      this.itemWidth = null;
+      this.itemHeight = null;
+      this.itemDepth = null;
+      this.itemCount = null;
+      if (this.itemType === 1) {
+        // Низ
+        this.itemHeight = 720;
+        this.itemDepth = 560;
       }
-    },
-    checkList() {
-      const list = ["эмаль", "пленка", "шпон", "массив", "каменный шпон"];
-      return list.indexOf(this.itemName.toLowerCase()) !== -1;
+      if (this.itemType === 2) {
+        // Верх
+        this.itemDepth = 310;
+      }
+      if (this.itemType === 3) {
+        // Пенал
+        this.itemWidth = 600;
+        this.itemHeight = 2040;
+        this.itemDepth = 560;
+      }
     },
     cloneItem() {
       this.hasSiblings = true;
@@ -236,7 +246,17 @@ export default {
         id: this.item.id,
         newData
       });
-      this.$store.dispatch("updateCalculation");
+      // this.$store.dispatch("updateCalculation");
+    },
+    updateName(name) {
+      this.$store.dispatch("updateSiblings", {
+        category: this.category,
+        parentId: this.parentId,
+        id: this.item.id,
+        newData: {
+          name: name
+        }
+      });
     }
   }
 };

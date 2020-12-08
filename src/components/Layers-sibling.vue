@@ -2,10 +2,20 @@
   <li v-if="square > 0" class="calc__row">
     <div class="calc__name">
       <b>Деталь {{ indexNumber }}:</b> {{ name ? `${name},` : "" }}
-      {{ color ? `${color},` : "" }} {{ typeNames[type - 1] }} {{ article }}
+      {{ color ? `${color},` : "" }} {{ typeNames[type - 1] }} , {{ height }}x{{
+        depth
+      }}x{{ width }}
     </div>
     <div class="calc__size">{{ square }} м<sup>2</sup></div>
     <div class="calc__price">{{ isOrder ? priceWithDiscount : price }} ₽</div>
+    <button
+      v-if="!isOrder"
+      class="calc__remove"
+      type="button"
+      @click="deleteItem"
+    >
+      <span class="icon icon-close"></span>
+    </button>
   </li>
 </template>
 
@@ -19,7 +29,8 @@ export default {
     category: String,
     parentId: Number,
     index: Number,
-    isOrder: Boolean
+    isOrder: Boolean,
+    letter: String
   },
   data() {
     return {
@@ -65,6 +76,26 @@ export default {
     },
     indexNumber() {
       return this.index + 1;
+    },
+    width() {
+      return this.item.width;
+    },
+    height() {
+      return this.item.height;
+    },
+    depth() {
+      return this.item.depth;
+    }
+  },
+  methods: {
+    deleteItem() {
+      console.log("deleteSiblings");
+      this.$store.dispatch("deleteSiblings", {
+        category: this.category,
+        parentId: this.parentId,
+        id: this.item.id,
+        letter: this.letter
+      });
     }
   }
 };

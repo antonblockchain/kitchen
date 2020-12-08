@@ -79,7 +79,6 @@ export default {
             acc + order[category].reduce((acc, item) => acc + item.total, 0)
           );
         }, 0);
-
         order.total = total;
       });
     },
@@ -159,6 +158,29 @@ export default {
       );
       data[currentOrder].list[currentCalculation][category] = [...list];
     },
+    // eslint-disable-next-line no-unused-vars
+    deleteSiblings({ data, currentOrder }, { category, parentId, id, letter }) {
+      data[currentOrder].list.forEach(calc => {
+        if (calc.name === letter) {
+          calc[category].forEach(item => {
+            if (item.id === parentId) {
+              item.options = item.options.filter(sub => sub.id !== id);
+              // console.log(item.options);
+            }
+          });
+        }
+      });
+      // data[currentOrder].list[currentCalculation][category] = data[
+      //     currentOrder
+      //     ].list[currentCalculation][category].map(item => {
+      //   if (item.id === parentId) {
+      //     item.options.push({
+      //       ...newItem
+      //     });
+      //   }
+      //   return item;
+      // });
+    },
     updateShopperPhone({ data, currentOrder }, { number, index }) {
       data[currentOrder].shopper.number[index].tel = number; // без оновлення state працює
     },
@@ -205,6 +227,7 @@ export default {
     },
     updateItem({ commit }, data) {
       commit("updateItem", data);
+      commit("updateCalculation");
     },
     deleteItem({ commit }, data) {
       commit("deleteItem", data);
@@ -215,6 +238,10 @@ export default {
     },
     updateSiblings({ commit }, data) {
       commit("updateSiblings", data);
+    },
+    deleteSiblings({ commit }, data) {
+      commit("deleteSiblings", data);
+      commit("updateCalculation");
     },
     updateShopperPhone({ commit }, data) {
       commit("updateShopperPhone", data);

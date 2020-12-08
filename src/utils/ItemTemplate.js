@@ -77,10 +77,10 @@ export default {
       item: {
         id: CALC.generateID(),
         name: "",
-        count: 0,
+        count: null,
         color: "",
-        price: 0,
-        prepay: 0,
+        price: null,
+        prepay: null,
         total: 0
       }
     };
@@ -148,6 +148,7 @@ export default {
       name: "А",
       total: 0,
       discount: null,
+      photo: [],
       corps: [this.corps().item],
       facades: [this.facades().item],
       loops: [this.loops().item],
@@ -173,7 +174,17 @@ export default {
           name: "А",
           total: 162516,
           discount: 10,
+          photo: [],
           corps: [
+            {
+              id: 462292,
+              name: "ЛДСП базовый",
+              total: 2500000,
+              color: "3333",
+              square: 1000,
+              prepay: 0,
+              options: []
+            },
             {
               id: 111111,
               name: "Brilliant",
@@ -268,6 +279,7 @@ export default {
           name: "Б",
           total: 0,
           discount: null,
+          photo: ["https://i.ibb.co/CKdBWyv/image-07-12-20-02-45.jpg"],
           corps: [this.corps().item],
           facades: [this.facades().item],
           loops: [this.loops().item],
