@@ -1,7 +1,7 @@
 <template>
   <fragment>
     <!--    <div id="nav" v-if="isLogin">-->
-    <div id="nav">
+    <div id="nav" v-if="false">
       <router-link to="/">Home</router-link>
       |
       <router-link to="/main">Main</router-link>

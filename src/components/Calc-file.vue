@@ -105,10 +105,8 @@ export default {
   },
   methods: {
     previewImage(event) {
-      // this.imageData = event.target.files[0];
       this.imageData = event.target.files;
       if (this.imageData) {
-        console.log(event.target.files);
         this.uploadValue = 0;
         this.picture = [];
         for (let i = 0; i < Math.min(this.imageData.length, 3); i++) {

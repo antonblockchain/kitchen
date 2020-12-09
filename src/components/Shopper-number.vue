@@ -49,7 +49,6 @@ export default {
   },
   methods: {
     addNumber() {
-      console.log("add");
       this.$store.dispatch("addShopperPhone");
     }
   }

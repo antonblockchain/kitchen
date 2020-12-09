@@ -2,7 +2,9 @@
   <div class="page page-order">
     <div class="page__left page__left-dark">
       <div class="page__header page__header-inside">
-        <div class="page__header_title">ЭТО<b>ПРОСЧЕТ</b></div>
+        <router-link to="/main" class="page__header_title">
+          ЭТО<b>ПРОСЧЕТ</b>
+        </router-link>
         <div class="page__header_info">
           Заявка #{{ formatOrder
           }}<span

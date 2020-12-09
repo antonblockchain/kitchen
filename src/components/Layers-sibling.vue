@@ -89,7 +89,6 @@ export default {
   },
   methods: {
     deleteItem() {
-      console.log("deleteSiblings");
       this.$store.dispatch("deleteSiblings", {
         category: this.category,
         parentId: this.parentId,

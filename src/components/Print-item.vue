@@ -28,7 +28,6 @@
       </div>
       <PrintManager />
     </div>
-
     <div class="calc__gallery">
       <img
         v-show="photo.length > 0"
@@ -36,7 +35,6 @@
         :key="img"
         :src="img"
         alt="img"
-        style="width: 100%"
       />
     </div>
   </div>
